@@ -1,0 +1,18 @@
+image: "node:10.16"
+
+cache:
+  paths:
+    - node_modules
+
+pages:
+  stage: "deploy"
+  only:
+    - master
+  script:
+    - npm i
+    - npm run build
+    - rm -rf public
+    - mv dist public
+  artifacts:
+    paths:
+      - public

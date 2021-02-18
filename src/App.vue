@@ -1,28 +1,89 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  v-app(style="font-family: Avenir")
+    v-app-bar(app, color="secondary", dark, style="margin: 0 auto")
+      v-btn(icon, to="/", v-if="$route.path != '/'")
+        v-icon mdi-home
+
+      v-toolbar-title Project Sekai Profile
+
+    v-main(style="width: 100%; margin: 0 auto")
+      .text-center.py-8(v-if="!ok")
+        v-progress-circular(indeterminate, color="primary")
+
+      div(v-else)
+        router-view(keep-alive)
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+
+  data: () => ({
+    ok: false,
+  }),
+
+  mounted() {
+    Promise.all([
+      axios.get('https://database-pjsekai.kirafan.cn/events.json').then(response => {
+        let events = response.data;
+        this.$root.events = {};
+        for (let event of events) {
+          this.$root.events[event.id] = event;
+        }
+      }),
+      axios.get('https://database-pjsekai.kirafan.cn/cards.json').then(response => {
+        let cards = response.data;
+        this.$root.cards = {};
+        for (let card of cards) {
+          this.$root.cards[card.id] = card;
+        }
+      }),
+      axios.get('https://database-pjsekai.kirafan.cn/gameCharacters.json').then(response => {
+        let gameCharacters = response.data;
+        this.$root.gameCharacters = {};
+        for (let gameCharacter of gameCharacters) {
+          this.$root.gameCharacters[gameCharacter.id] = gameCharacter;
+        }
+      }),
+      axios.get('https://database-pjsekai.kirafan.cn/honors.json').then(response => {
+        let honors = response.data;
+        this.$root.honors = {};
+        for (let honor of honors) {
+          this.$root.honors[honor.id] = honor;
+        }
+      }),
+      axios.get('https://database-pjsekai.kirafan.cn/musics.json').then(response => {
+        let musics = response.data;
+        this.$root.musics = {};
+        for (let music of musics) {
+          this.$root.musics[music.id] = music;
+        }
+      }),
+      axios.get('https://database-pjsekai.kirafan.cn/musicDifficulties.json').then(response => {
+        let musicDifficulties = response.data;
+        this.$root.musicDifficulties = {};
+        for (let musicDifficulty of musicDifficulties) {
+          if (!this.$root.musicDifficulties[musicDifficulty.musicId]) {
+            this.$root.musicDifficulties[musicDifficulty.musicId] = {};
+          }
+          this.$root.musicDifficulties[musicDifficulty.musicId][musicDifficulty.musicDifficulty] = musicDifficulty;
+        }
+      }),
+    ]).then(() => {
+      this.ok = true;
+    });
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.v-list-item__action {
+  min-width: 0 !important;
+  margin: auto 0 auto 16px !important;
+}
+.v-tabs-items {
+  background-color: #00000000 !important;
 }
 </style>
