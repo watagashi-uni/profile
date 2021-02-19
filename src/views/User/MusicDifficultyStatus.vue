@@ -43,7 +43,7 @@ export default {
         },
         rank: {
           'border': `1px solid ${this.rank == 'P' ? '#FFFFFF' : this.rank == 'F' ? '#F06292' : this.color}`,
-          'color': this.rank >= 'F' ? '#00000099' : '#FFFFFF99',
+          'color': this.rank == 'P' ? '#FFFFFF99' : this.rank >= 'F' ? '#00000099' : '#FFFFFF99',
           'background-color': this.rank == 'F' ? '#F06292' : null,
           'background-image': this.rank == 'P' ? 'linear-gradient(#F06292, #64B5F6)' : null,
           'font-weight': this.rank >= 'F' ? 550 : null,

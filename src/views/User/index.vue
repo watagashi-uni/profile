@@ -12,7 +12,7 @@
         v-tab events
         v-tab characters
       v-tabs-items(v-model="tab1")
-        v-tab-item: Musics(:profile="profile")
+        v-tab-item: Musics(:profile="profile", :key="`user-${this.id}-musics`")
         v-tab-item: Events(:profile="profile", :rankings="rankings")
         v-tab-item: Characters(:profile="profile")
       .py-2
@@ -35,7 +35,7 @@
           v-tab musics
           v-tab events
         v-tabs-items(v-model="tab2")
-          v-tab-item: Musics(:profile="profile")
+          v-tab-item: Musics(:profile="profile", :key="`user-${this.id}-musics`")
           v-tab-item: Events(:profile="profile", :rankings="rankings")
         .py-2
     
@@ -55,7 +55,7 @@
         .py-2
         v-list-item(dense)
           v-list-item-title Musics
-        Musics(:profile="profile")
+        Musics(:profile="profile", :key="`user-${this.id}-musics`")
         .py-2
 
       v-divider(vertical)
