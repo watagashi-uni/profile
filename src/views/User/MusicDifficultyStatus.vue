@@ -12,7 +12,7 @@
     .d-flex
       .score(:style="style.score")
         span(v-if="status.userMusicResults.length == 0")
-        span(v-else) {{score}}
+        span(v-else) {{_score}}
 </template>
 
 <script>
@@ -20,7 +20,7 @@
 export default {
   name: 'MusicDifficultyStatus',
 
-  props: ['status'],
+  props: ['status', 'score'],
 
   computed: {
     rank() {
@@ -30,8 +30,8 @@ export default {
         'clear': 'C',
       }[result.playResult])).reduce((x, y) => x > y ? x : y, '');
     },
-    score() {
-      return this.status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0);
+    _score() {
+      return this.score || this.status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0);
     },
     style() {
       return {
