@@ -31,7 +31,7 @@
 
       v-divider(vertical)
 
-      div.pa-0(style="width: calc(100% - 361px); max-height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc(100% - 361px); max-height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
         v-tabs(v-model="tab2", fixed-tabs)
           v-tab musics
@@ -42,7 +42,7 @@
         .py-2
     
     .d-none.d-lg-flex
-      div(style="width: 360px; max-height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: 360px; height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
         Profile(:profile="profile")
         .py-2
@@ -53,7 +53,7 @@
 
       v-divider(vertical)
 
-      div(style="width: calc(50% - 181px); max-height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc((100% - 362px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
         v-list-item(dense)
           v-list-item-title Musics
@@ -62,7 +62,7 @@
 
       v-divider(vertical)
 
-      div(style="width: calc(50% - 181px); max-height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc((100% - 362px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
         v-list-item(dense)
           v-list-item-title Events

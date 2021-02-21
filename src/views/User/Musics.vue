@@ -14,41 +14,43 @@
         v-list-item-title Recent All Perfect
 
     .d-flex
-      v-list.py-0(dense, style="width: calc(50% - 0.5px)")
-        Divider
-        template(v-for="result, i in recent['F'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
-          Divider(inset=16, v-if="i")
-          v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
-            v-list-item-avatar(tile)
-              v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
-            v-list-item-content
-              v-list-item-title {{$root.musics[result.musicId].title}}
-              v-list-item-subtitle
-                MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
-        template(v-if="recent['F'].length == 0")
-          v-list-item
-            v-list-item-content
-              v-list-item-subtitle None
-        Divider
+      div(style="width: calc(50% - 0.5px)")
+        v-list.py-0(dense)
+          Divider
+          template(v-for="result, i in recent['F'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
+            Divider(inset=16, v-if="i")
+            v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
+              v-list-item-avatar(tile)
+                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
+              v-list-item-content
+                v-list-item-title {{$root.musics[result.musicId].title}}
+                v-list-item-subtitle
+                  MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
+          template(v-if="recent['F'].length == 0")
+            v-list-item
+              v-list-item-content
+                v-list-item-subtitle None
+          Divider
 
       v-divider(vertical)
 
-      v-list.py-0(dense, style="width: calc(50% - 0.5px)")
-        Divider
-        template(v-for="result, i in recent['P'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
-          Divider(inset=16, v-if="i")
-          v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
-            v-list-item-avatar(tile)
-              v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
-            v-list-item-content
-              v-list-item-title {{$root.musics[result.musicId].title}}
-              v-list-item-subtitle
-                MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
-        template(v-if="recent['P'].length == 0")
-          v-list-item
-            v-list-item-content
-              v-list-item-subtitle None
-        Divider
+      div(style="width: calc(50% - 0.5px)")
+        v-list.py-0(dense)
+          Divider
+          template(v-for="result, i in recent['P'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
+            Divider(inset=16, v-if="i")
+            v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
+              v-list-item-avatar(tile)
+                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
+              v-list-item-content
+                v-list-item-title {{$root.musics[result.musicId].title}}
+                v-list-item-subtitle
+                  MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
+          template(v-if="recent['P'].length == 0")
+            v-list-item
+              v-list-item-content
+                v-list-item-subtitle None
+          Divider
 
     .py-2
     v-list-item(dense)
