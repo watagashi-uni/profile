@@ -1,6 +1,8 @@
 <template lang="pug">
-  div(v-if="!profile")
+  .pa-8.text-center(v-if="!profile")
     v-progress-circular(indeterminate, color="primary")
+    .pa-2.caption
+      span Loading profile...
 
   div(v-else)
     .d-block.d-md-none
@@ -96,18 +98,38 @@ export default {
     };
   },
 
-  mounted() {
-    sekai(`/api/user/${this.id}/profile`).then(response => {
-      console.log(response);
-      this.profile = response;
-    }).then(() => {
-      Object.values(this.$root.events).forEach(event => {
-        sekai(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
-          this.rankings[event.id] = response.rankings;
-          console.log(event.id, this.rankings[event.id]);
+  methods: {
+    load() {
+      let id = this.id;
+      this.profile = null;
+      Object.keys(this.rankings).forEach(i => this.rankings[i] = null);
+
+      sekai(`/api/user/${this.id}/profile`).then(response => {
+        if (id != this.id) return;
+        this.profile = response;
+      }).then(() => {
+        Object.values(this.$root.events).forEach(event => {
+          sekai(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
+            if (id != this.id) return;
+            this.rankings[event.id] = response.rankings;
+          });
         });
       });
+    }
+  },
+
+  mounted() {
+    this.$nextTick(function () {
+      this.load();
     });
+  },
+
+  watch: {
+    id() {
+      this.$nextTick(function () {
+        this.load();
+      });
+    }
   }
 };
 </script>

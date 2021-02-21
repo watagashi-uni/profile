@@ -7,8 +7,10 @@
       v-toolbar-title Project Sekai Profile
 
     v-main(style="width: 100%; margin: 0 auto")
-      .text-center.py-8(v-if="!ok")
+      .pa-8.text-center(v-if="!ok")
         v-progress-circular(indeterminate, color="primary")
+        .pa-2.caption
+          span Loading Database...
 
       div(v-else)
         router-view(keep-alive)
