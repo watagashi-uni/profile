@@ -6,6 +6,21 @@
 
       v-toolbar-title Project Sekai Profile
 
+      v-spacer
+
+      v-dialog(v-model="search")
+        template(v-slot:activator="{on, attrs}")
+          v-btn(icon, v-on="on", v-bind="attrs")
+            v-icon mdi-magnify
+        v-card
+          v-card-title Search Player ID
+          v-card-text
+            v-text-field(dense, v-model="input")
+          v-card-actions
+            v-btn(text, @click="search=false") Cancel
+            v-spacer
+            v-btn(text, color="primary", @click="onSearch") OK
+
     v-main(style="width: 100%; margin: 0 auto")
       .pa-8.text-center(v-if="!ok")
         v-progress-circular(indeterminate, color="primary")
@@ -24,7 +39,16 @@ export default {
 
   data: () => ({
     ok: false,
+    search: false,
+    input: '',
   }),
+
+  methods: {
+    onSearch() {
+      this.search = false;
+      this.$router.push(`/user/${this.input}`);
+    },
+  },
 
   mounted() {
     Promise.all([

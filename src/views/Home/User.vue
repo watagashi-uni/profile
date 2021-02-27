@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     //- p {{JSON.stringify(user)}}
-    v-list-item(dense, :to="`/user/${user.userId}`")
+    v-list-item(dense, :to="`/user/${user.userId || (user.userProfile && user.userProfile.userId)}`")
       v-list-item-avatar
         v-img(:src="`${$assets()}/thumbnail/chara_rip/${$root.cards[user.userCard.cardId].assetbundleName}_${user.userCard.defaultImage == 'special_training' ? 'after_training' : 'normal'}.png`")
       v-list-item-content
