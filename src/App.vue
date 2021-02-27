@@ -8,7 +8,7 @@
 
       v-spacer
 
-      v-dialog(v-model="search")
+      v-dialog(v-model="search", width=360)
         template(v-slot:activator="{on, attrs}")
           v-btn(icon, v-on="on", v-bind="attrs")
             v-icon mdi-magnify
