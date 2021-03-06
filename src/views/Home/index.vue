@@ -10,8 +10,14 @@
         v-tab Tops
         v-tab Rankings
       v-tabs-items(v-model="tab1")
-        v-tab-item: Rankings(:rankings="tops")
-        v-tab-item: Rankings(:rankings="rankings")
+        v-tab-item
+          Rankings(:rankings="tops")
+        v-tab-item
+          Rankings(:rankings="rankings")
+      v-list-item(dense)
+        v-list-item-content
+          v-list-item-subtitle The ranking is not real-time updated.
+          v-list-item-subtitle Please do not use this for scheduling your event.
       .py-2
       v-list-item(dense)
         v-list-item-title About
@@ -40,6 +46,10 @@
         v-tabs-items(v-model="tab2")
           v-tab-item: Rankings(:rankings="tops")
           v-tab-item: Rankings(:rankings="rankings")
+        v-list-item(dense)
+          v-list-item-content
+            v-list-item-subtitle The ranking is not real-time updated.
+            v-list-item-subtitle Please do not use this for scheduling your event.
         .py-2
 
     .d-none.d-lg-flex
@@ -70,6 +80,10 @@
         v-list-item(dense)
           v-list-item-title Rankings 
         Rankings(:rankings="rankings")
+        v-list-item(dense)
+          v-list-item-content
+            v-list-item-subtitle The ranking is not real-time updated.
+            v-list-item-subtitle Please do not use this for scheduling your event.
         .py-2
     
 

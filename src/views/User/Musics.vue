@@ -58,17 +58,47 @@
 
     v-list.py-0(dense)
       Divider
+
+      v-list-item
+        v-menu(offset-y)
+          template(v-slot:activator="{on, attrs}")
+            .d-flex.mr-4.text-center(v-ripple, v-on="on", v-bind="attrs", style="height: 40px")
+              .ma-auto(style="width: 40px")
+                v-list-item-subtitle(v-if="sort == 'Level' || sort == 'Rank'") {{sort}}
+                v-icon(v-else) mdi-menu-{{sortOrder > 0 ? 'up' : 'down'}}
+          v-list(dense)
+            v-list-item(v-for="item in sortItems", @click="sort = item.sort; sortOrder = item.sortOrder")
+              v-icon mdi-menu-{{item.sortOrder > 0 ? 'up' : 'down'}}
+              v-list-item-title {{item.sort}}
+
+        div(style="width: 100%")
+          .d-flex(style="height: 40px; position: absolute;")
+            v-list-item-subtitle.my-auto
+              span(v-if="sort != 'Level' && sort != 'Rank'") {{sort}}
+          .d-flex
+            template(v-for="difficulty, i in sortDifficulties")
+              .pr-2(v-if="i")
+              .d-flex.text-center(v-ripple, @click="sortByDifficulty(difficulty)", style="height: 40px; width: calc(20% - 3.2px); z-index: 1")
+                .ma-auto(v-if="sort == 'Level' || sort == 'Rank'")
+                  v-icon(v-if="difficulty == sortDifficulty") mdi-menu-{{sortOrder > 0 ? 'up' : 'down'}}
+
+      Divider
+
       template(v-for="music, i in sortedMusics")
         Divider(inset=16, v-if="i")
         v-list-item(:key="`musics-${music.musicId}`")
           v-list-item-avatar(tile)
             v-img(:src="`${$assets()}/music/jacket/${$root.musics[music.musicId].assetbundleName}_rip/${$root.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
-            v-list-item-title {{$root.musics[music.musicId].title}}
+            v-list-item-title.d-flex
+              v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="sort == 'ID'") {{music.musicId}}
+              v-list-item-subtitle.pr-2(style="flex: 0 1 auto", v-if="sort == 'Release time'") {{new Date($root.musics[music.musicId].publishedAt).toLocaleDateString()}}
+              span {{$root.musics[music.musicId].title}}
             v-list-item-subtitle.d-flex
               template(v-for="status, i in music.userMusicDifficultyStatuses")
                 .pr-2(v-if="i")
                 MusicDifficultyStatus(:key="`musics-difficulties-${status.musicDifficulty}`", :status="status", style="width: calc(20% - 3.2px)")
+
       Divider
 </template>
 
@@ -77,6 +107,7 @@ import * as echarts from 'echarts';
 
 import Divider from '@/components/Divider';
 import MusicDifficultyStatus from './MusicDifficultyStatus';
+// import { get } from 'idb-keyval';
 
 export default {
   name: 'Music',
@@ -101,13 +132,50 @@ export default {
         { name: 'C', color: '#FFB74D', hint: 'Clear' },
         { name: 'F', color: '#F06292', hint: 'Full Combo' },
         { name: 'P', color: '#FFFFFF', hint: 'All Perfect' },
-      ]
+      ],
+      sort: 'Default',
+      sortDifficulty: 'master',
+      sortOrder: 1,
     };
   },
 
   computed: {
+    sortDifficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
+    sortItems () { 
+      return [
+        { sort: 'Default', sortOrder: 1, sortFunctions: [this.sortFunctions.default] },
+        { sort: 'ID', sortOrder: 1, sortFunctions: [this.sortFunctions.id] },
+        { sort: 'Name', sortOrder: 1, sortFunctions: [this.sortFunctions.name] },
+        { sort: 'Release time', sortOrder: -1, sortFunctions: [this.sortFunctions.releaseTime, this.sortFunctions.default] },
+        { sort: 'Level', sortOrder: 1, sortFunctions: [this.sortFunctions.level, this.sortFunctions.default] },
+        { sort: 'Rank', sortOrder: -1, sortFunctions: [this.sortFunctions.rank, this.sortFunctions.level, this.sortFunctions.default] },
+      ];
+    },
+    sortFunctions() {
+      return {
+        default: music => this.$root.musics[music.musicId].seq,
+        id: music => music.musicId,
+        name: music => this.$root.musics[music.musicId].title.toLowerCase(),
+        releaseTime: music => this.$root.musics[music.musicId].publishedAt,
+        level: music => this.$root.musicDifficulties[music.musicId][this.sortDifficulty].playLevel,
+        rank: music => music.userMusicDifficultyStatuses.find(status => status.musicDifficulty == this.sortDifficulty).userMusicResults.map(result => ({
+          'full_perfect': 'P',
+          'full_combo': 'F',
+          'clear': 'C',
+        }[result.playResult])).reduce((x, y) => x > y ? x : y, ''),
+      };
+    },
     sortedMusics() {
-      return this.profile.userMusics;
+      let sortFunctions = this.sortItems.find(item => item.sort == this.sort).sortFunctions;
+      return this.profile.userMusics.slice().sort((a, b) => {
+        for (let f of sortFunctions) {
+          let fa = f(a);
+          let fb = f(b);
+          if (fa < fb) return -1 * this.sortOrder;
+          if (fa > fb) return 1 * this.sortOrder;
+        }
+        return 0;
+      });
     },
     summary() {
       let result = {
@@ -224,8 +292,23 @@ export default {
       this.chart.setOption(this.options);
       this.chart.resize();
       window.addEventListener('resize', () => this.chart.resize());
+    },
+
+    sortByDifficulty(difficulty) {
+      if (this.sort == 'Level' || this.sort == 'Rank') {
+        if (this.sortDifficulty == difficulty) {
+          this.sortOrder = - this.sortOrder;
+        } else {
+          this.sortDifficulty = difficulty;
+        }
+      } else {
+        this.sort = 'Level';
+        this.sortOrder = 1;
+        this.sortDifficulty = difficulty;
+      }
     }
   },
+
   mounted() {
     this.$nextTick(function () {
       this.draw();
