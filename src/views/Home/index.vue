@@ -63,6 +63,7 @@
         v-list-item(dense)
           v-list-item-title About
         About
+        .py-2
       
       v-divider(vertical)
 
@@ -90,7 +91,7 @@
 </template>
 
 <script>
-import { values } from 'idb-keyval';
+import { set, values } from 'idb-keyval';
 
 import sekai from '@/sekai';
 import Rankings from './Rankings';
@@ -150,21 +151,36 @@ export default {
         });
       });
 
+      let sort = () => {
+        this.followings.sort((a, b) => {
+          if (a.score === undefined || b.score === undefined) {
+            return 0;
+          }
+          return (a.score || 0) < (b.score || 0) ? 1 : -1;
+        });
+      };
+
       values().then(users => {
         users.filter(user => user.user && user.userProfile).forEach(user => {
           if (!user.user || !user.userProfile) {
             return;
           }
+          user.rank = 0;
+          user.score = undefined;
           this.followings.push(user);
           sekai(`/api/user/{user_id}/event/${this.eventId}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
             let ranking = response.rankings[0];
             if (ranking) {
               Object.keys(ranking).forEach(key => user[key] = ranking[key]);
+              set(user.userProfile.userId, user);
             } else {
+              user.rank = 0;
               user.score = 0;
             }
+            sort();
           });
         });
+        sort();
       });
     },
   },

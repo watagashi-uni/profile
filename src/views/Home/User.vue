@@ -14,7 +14,7 @@
 
       v-list-item-action(v-if="user.score===undefined")
           v-list-item-action-text ...
-      v-list-item-action(v-else)
+      v-list-item-action(v-else-if="user.score!==false")
         v-list-item-title.align-self-end(v-if="user.rank") Rank {{user.rank}}
         v-list-item-action-text {{user.score}} P
 </template>

@@ -33,6 +33,7 @@ export default {
     return {
       user: {
         name: '林檎アメ',
+        score: false,
         userId: '16656056566779905',
         userCard: {
           cardId: 135,
