@@ -18,7 +18,7 @@
         v-list.py-0(dense)
           Divider
           template(v-for="result, i in recent['F'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
-            Divider(inset=16, v-if="i")
+            Divider(inset=72, v-if="i")
             v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
               v-list-item-avatar(tile)
                 v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
@@ -38,7 +38,7 @@
         v-list.py-0(dense)
           Divider
           template(v-for="result, i in recent['P'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
-            Divider(inset=16, v-if="i")
+            Divider(inset=72, v-if="i")
             v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
               v-list-item-avatar(tile)
                 v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
@@ -85,7 +85,7 @@
       Divider
 
       template(v-for="music, i in sortedMusics")
-        Divider(inset=16, v-if="i")
+        Divider(inset=72, v-if="i")
         v-list-item(:key="`musics-${music.musicId}`")
           v-list-item-avatar(tile)
             v-img(:src="`${$assets()}/music/jacket/${$root.musics[music.musicId].assetbundleName}_rip/${$root.musics[music.musicId].assetbundleName}.png`")
@@ -141,7 +141,7 @@ export default {
 
   computed: {
     sortDifficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
-    sortItems () { 
+    sortItems() {
       return [
         { sort: 'Default', sortOrder: 1, sortFunctions: [this.sortFunctions.default] },
         { sort: 'ID', sortOrder: 1, sortFunctions: [this.sortFunctions.id] },

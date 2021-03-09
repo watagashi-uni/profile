@@ -8,7 +8,7 @@
     Divider
     transition-group(name="list", tag="div")
       template(v-for="user, i in rankings")
-        Divider(inset=16, v-if="i", :key="`divider-${i}`")
+        Divider(inset=72, v-if="i", :key="`divider-${i}`")
         User(:user="user", :key="`user-${user.userId || (user.userProfile && user.userProfile.userId)}`")
     div(v-if="rankings.length == 0")
       v-list-item
