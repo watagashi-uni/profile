@@ -156,7 +156,13 @@ export default {
           if (a.score === undefined || b.score === undefined) {
             return 0;
           }
-          return (a.score || 0) < (b.score || 0) ? 1 : -1;
+          if ((a.score || 0) < (b.score || 0)) {
+            return 1;
+          }
+          if ((a.score || 0) > (b.score || 0)) {
+            return -1;
+          }
+          return 0;
         });
       };
 
@@ -165,8 +171,10 @@ export default {
           if (!user.user || !user.userProfile) {
             return;
           }
-          user.rank = 0;
-          user.score = undefined;
+          if (!user.rank || !user.score) {
+            user.rank = 0;
+            user.score = 0;
+          }
           this.followings.push(user);
           sekai(`/api/user/{user_id}/event/${this.eventId}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
             let ranking = response.rankings[0];
@@ -181,6 +189,10 @@ export default {
           });
         });
         sort();
+        for (let user of this.followings) {
+          user.rank = undefined;
+          user.score = undefined;
+        }
       });
     },
   },
