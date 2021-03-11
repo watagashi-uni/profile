@@ -184,6 +184,7 @@ export default {
             } else {
               user.rank = 0;
               user.score = 0;
+              set(user.userProfile.userId, user);
             }
             sort();
           });
