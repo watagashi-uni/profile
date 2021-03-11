@@ -21,7 +21,7 @@
             Divider(inset=72, v-if="i")
             v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
               v-list-item-avatar(tile)
-                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
+                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
               v-list-item-content
                 v-list-item-title {{$root.musics[result.musicId].title}}
                 v-list-item-subtitle
@@ -41,7 +41,7 @@
             Divider(inset=72, v-if="i")
             v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
               v-list-item-avatar(tile)
-                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}_rip/${$root.musics[result.musicId].assetbundleName}.png`")
+                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
               v-list-item-content
                 v-list-item-title {{$root.musics[result.musicId].title}}
                 v-list-item-subtitle
@@ -67,7 +67,7 @@
                 v-list-item-subtitle(v-if="sort == 'Level' || sort == 'Rank'") {{sort}}
                 v-icon(v-else) mdi-menu-{{sortOrder > 0 ? 'up' : 'down'}}
           v-list(dense)
-            v-list-item(v-for="item in sortItems", @click="sort = item.sort; sortOrder = item.sortOrder")
+            v-list-item(v-for="item in sortItems", :key="`sort-${item.sort}`", @click="sort = item.sort; sortOrder = item.sortOrder")
               v-icon mdi-menu-{{item.sortOrder > 0 ? 'up' : 'down'}}
               v-list-item-title {{item.sort}}
 
@@ -88,7 +88,7 @@
         Divider(inset=72, v-if="i")
         v-list-item(:key="`musics-${music.musicId}`")
           v-list-item-avatar(tile)
-            v-img(:src="`${$assets()}/music/jacket/${$root.musics[music.musicId].assetbundleName}_rip/${$root.musics[music.musicId].assetbundleName}.png`")
+            v-img(:src="`${$assets()}/music/jacket/${$root.musics[music.musicId].assetbundleName}/${$root.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
             v-list-item-title.d-flex
               v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="sort == 'ID'") {{music.musicId}}

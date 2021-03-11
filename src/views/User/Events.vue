@@ -5,7 +5,7 @@
       Divider(inset=112, v-if="i")
       v-list-item(:key="`events-${event.id}`")
         .my-2.mr-4(style="height: 40px; width: 80px")
-          v-img(:src="`${$assets()}/event/${event.assetbundleName}/logo_rip/logo.png`")
+          v-img(:src="`${$assets()}/../ondemand/event/${event.assetbundleName}/logo/logo/logo.png`")
         v-list-item-content
           v-list-item-title {{event.name}}
         v-list-item-action(v-if="rankings[event.id] === null")

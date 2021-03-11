@@ -7,7 +7,7 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$assets = function () {
   // TODO: cache assets to kirafan.cn
-  return 'https://sekai-res.dnaroma.eu/file/sekai-assets';
+  return 'https://assets.pjsek.ai/file/pjsekai-assets/startapp';
 };
 
 new Vue({
