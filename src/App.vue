@@ -52,42 +52,49 @@ export default {
 
   mounted() {
     Promise.all([
-      axios.get('https://database-pjsekai.kirafan.cn/events.json').then(response => {
+      axios.get('https://database.pjsekai.moe/events.json').then(response => {
         let events = response.data;
         this.$root.events = {};
         for (let event of events) {
           this.$root.events[event.id] = event;
         }
       }),
-      axios.get('https://database-pjsekai.kirafan.cn/cards.json').then(response => {
+      axios.get('https://database.pjsekai.moe/cards.json').then(response => {
         let cards = response.data;
         this.$root.cards = {};
         for (let card of cards) {
           this.$root.cards[card.id] = card;
         }
       }),
-      axios.get('https://database-pjsekai.kirafan.cn/gameCharacters.json').then(response => {
+      axios.get('https://database.pjsekai.moe/gameCharacters.json').then(response => {
         let gameCharacters = response.data;
         this.$root.gameCharacters = {};
         for (let gameCharacter of gameCharacters) {
           this.$root.gameCharacters[gameCharacter.id] = gameCharacter;
         }
       }),
-      axios.get('https://database-pjsekai.kirafan.cn/honors.json').then(response => {
+      axios.get('https://database.pjsekai.moe/honors.json').then(response => {
         let honors = response.data;
         this.$root.honors = {};
         for (let honor of honors) {
           this.$root.honors[honor.id] = honor;
         }
       }),
-      axios.get('https://database-pjsekai.kirafan.cn/musics.json').then(response => {
+      axios.get('https://database.pjsekai.moe/honorGroups.json').then(response => {
+        let honorGroups = response.data;
+        this.$root.honorGroups = {};
+        for (let honorGroup of honorGroups) {
+          this.$root.honorGroups[honorGroup.id] = honorGroup;
+        }
+      }),
+      axios.get('https://database.pjsekai.moe/musics.json').then(response => {
         let musics = response.data;
         this.$root.musics = {};
         for (let music of musics) {
           this.$root.musics[music.id] = music;
         }
       }),
-      axios.get('https://database-pjsekai.kirafan.cn/musicDifficulties.json').then(response => {
+      axios.get('https://database.pjsekai.moe/musicDifficulties.json').then(response => {
         let musicDifficulties = response.data;
         this.$root.musicDifficulties = {};
         for (let musicDifficulty of musicDifficulties) {
@@ -108,6 +115,9 @@ export default {
 .v-list-item__action {
   min-width: 0 !important;
   margin: auto 0 auto 16px !important;
+}
+.v-tab {
+  font-size: 0.8125rem !important;
 }
 .v-tabs-items {
   background-color: #00000000 !important;

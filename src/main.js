@@ -10,6 +10,10 @@ Vue.prototype.$assets = function () {
   return 'https://assets.pjsek.ai/file/pjsekai-assets/startapp';
 };
 
+Vue.prototype.$eventID = function () {
+  return 31;
+};
+
 new Vue({
   vuetify,
   router,

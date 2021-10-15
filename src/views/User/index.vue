@@ -15,7 +15,12 @@
         v-tab characters
       v-tabs-items(v-model="tab1")
         v-tab-item: Musics(:profile="profile")
-        v-tab-item: Events(:profile="profile", :rankings="rankings")
+        v-tab-item
+          Events(:profile="profile", :rankings="rankings")
+          .py-2
+          v-list-item(dense)
+            v-list-item-title Honors
+          Honors(:profile="profile")
         v-tab-item: Characters(:profile="profile")
       .py-2
 
@@ -36,9 +41,11 @@
         v-tabs(v-model="tab2", fixed-tabs)
           v-tab musics
           v-tab events
+          v-tab honors
         v-tabs-items(v-model="tab2")
           v-tab-item: Musics(:profile="profile")
           v-tab-item: Events(:profile="profile", :rankings="rankings")
+          v-tab-item: Honors(:profile="profile")
         .py-2
     
     .d-none.d-lg-flex
@@ -68,6 +75,10 @@
           v-list-item-title Events
         Events(:profile="profile", :rankings="rankings")
         .py-2
+        v-list-item(dense)
+          v-list-item-title Honors
+        Honors(:profile="profile")
+        .py-2
 
 </template>
 
@@ -78,13 +89,14 @@ import Profile from './Profile';
 import Musics from './Musics';
 import Events from './Events';
 import Characters from './Characters';
+import Honors from './Honors';
 
 export default {
   name: 'User',
 
   props: ['id'],
 
-  components: { Divider, Profile, Musics, Events, Characters },
+  components: { Divider, Profile, Musics, Events, Characters, Honors },
 
   data() {
     let rankings = {};
@@ -108,7 +120,7 @@ export default {
         if (id != this.id) return;
         this.profile = response;
       }).then(() => {
-        Object.values(this.$root.events).forEach(event => {
+        Object.values(this.$root.events).filter(event => event.id >= this.$eventID()).forEach(event => {
           sekai(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
             if (id != this.id) return;
             this.rankings[event.id] = response.rankings;
