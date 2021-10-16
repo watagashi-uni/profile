@@ -5,8 +5,48 @@
       div(ref="summary", style="height: 270px")
       v-select.px-4(dense, v-model="showRank", :items="showRanks")
       Divider
+    
+    .py-2
+
+    v-list.py-0(dense)
+      Divider
+
+      v-list-item
+        .mr-4
+          div(style="height: 40px; width: 40px")
+        v-list-item-subtitle
+          .d-flex
+            template(v-for="difficulty, i in difficulties")
+              .pr-2(v-if="i")
+              div(style="width: calc(20% - 3.2px)")
+                .difficulty(:style="difficultyStyle(difficulty)") {{difficulty}}
+
+      template(v-for="difficulties, rank in summaryByDifficulty")
+        Divider(inset=72)
+        v-list-item
+          .mr-4
+            v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+              .rank.my-auto(:style="rankStyle(rank)") {{rank}}
+          v-list-item-subtitle
+            .d-flex
+              template(v-for="score, difficulty, i in difficulties")
+                .pr-2(v-if="i")
+                div(style="width: calc(20% - 3.2px)")
+                  .score {{score}}
+
+      Divider(inset=72)
+
+      v-list-item
+        .mr-4
+          v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+            .rank.my-auto all
+        v-list-item-subtitle
+          .score {{Object.values($root.musics).length}}
+      
+      Divider
 
     .py-2
+
     .d-flex
       v-list-item(dense)
         v-list-item-title Recent Full Combo
@@ -76,7 +116,7 @@
             v-list-item-subtitle.my-auto
               span(v-if="sort != 'Level' && sort != 'Rank'") {{sort}}
           .d-flex
-            template(v-for="difficulty, i in sortDifficulties")
+            template(v-for="difficulty, i in difficulties")
               .pr-2(v-if="i")
               .d-flex.text-center(v-ripple, @click="sortByDifficulty(difficulty)", style="height: 40px; width: calc(20% - 3.2px); z-index: 1")
                 .ma-auto(v-if="sort == 'Level' || sort == 'Rank'")
@@ -140,7 +180,14 @@ export default {
   },
 
   computed: {
-    sortDifficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
+    difficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
+    difficultyColors: () => ({
+      easy: '#81C784',
+      normal: '#64B5F6',
+      hard: '#FFB74D',
+      expert: '#E57373',
+      master: '#BA68C8',
+    }),
     sortItems() {
       return [
         { sort: 'Default', sortOrder: 1, sortFunctions: [this.sortFunctions.default] },
@@ -206,6 +253,35 @@ export default {
           result['All'][level] += 1;
         }
       }
+      return result;
+    },
+    summaryByDifficulty() {
+      let result = {
+        'P': {},
+        'F': {},
+        'C': {},
+      };
+
+      for (let difficulty of this.difficulties) {
+        result['P'][difficulty] = 0;
+        result['F'][difficulty] = 0;
+        result['C'][difficulty] = 0;
+      }
+
+      for (let music of this.profile.userMusics) {
+        for (let status of music.userMusicDifficultyStatuses) {
+          let rank = status.userMusicResults.map(result => ({
+            'full_perfect': 'P',
+            'full_combo': 'F',
+            'clear': 'C',
+          }[result.playResult])).reduce((x, y) => x > y ? x : y, '');
+
+          if (rank >= 'C') result['C'][status.musicDifficulty] += 1;
+          if (rank >= 'F') result['F'][status.musicDifficulty] += 1;
+          if (rank >= 'P') result['P'][status.musicDifficulty] += 1;
+        }
+      }
+
       return result;
     },
     recent() {
@@ -306,6 +382,24 @@ export default {
         this.sortOrder = 1;
         this.sortDifficulty = difficulty;
       }
+    },
+
+    difficultyStyle(difficulty) {
+      return {
+        'border': `1px solid ${this.difficultyColors[difficulty]}`,
+        'color': '#00000099',
+        'background-color': this.difficultyColors[difficulty],
+        'font-weight': 550,
+      };
+    },
+    rankStyle(rank) {
+      return {
+        'border': `1px solid ${rank == 'P' ? '#FFFFFF' : rank == 'F' ? '#F06292' : '#FFB74D'}`,
+        'color': rank == 'P' ? '#FFFFFF' : rank >= 'F' ? '#00000099' : '#FFFFFF99',
+        'background-color': rank == 'F' ? '#F06292' : null,
+        'background-image': rank == 'P' ? 'linear-gradient(#F06292, #64B5F6)' : null,
+        'font-weight': rank >= 'F' ? 550 : null,
+      };
     }
   },
 
@@ -323,3 +417,33 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.difficulty,
+.rank,
+.score {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.difficulty {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  width: 100%;
+}
+
+.rank {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  width: 100%;
+}
+
+.score {
+  font-size: 80%;
+  width: 100%;
+}
+</style>
