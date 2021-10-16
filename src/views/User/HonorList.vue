@@ -2,13 +2,15 @@
   v-list.py-0(dense)
     Divider
     template(v-for="honor, i in honors")
-      Divider(inset=222, v-if="i")
+      Divider(inset=203, v-if="i")
       v-list-item(:key="`honors-${honor.honorId}`")
         .my-2.mr-4
-          Honor(:id="honor.honorId", :level="honor.level")
+          Honor(:id="honor.honorId", :level="honor.level", size=36)
         v-list-item-content
           v-list-item-title {{$root.honorGroups[$root.honors[honor.honorId].groupId].name}}
-          v-list-item-subtitle {{$root.honors[honor.honorId].name}}
+          v-list-item-subtitle
+            span(v-if="$root.honorGroups[$root.honors[honor.honorId].groupId].name != $root.honors[honor.honorId].name") {{$root.honors[honor.honorId].name}}
+            span(v-if="$root.honors[honor.honorId].levels.length > 1") Lv. {{honor.level}}
     Divider
 </template>
 
@@ -22,5 +24,6 @@ export default {
   props: ['honors'],
 
   components: { Honor, Divider },
+
 };
 </script>

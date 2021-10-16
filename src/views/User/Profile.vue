@@ -12,10 +12,13 @@
           v-list-item-action-text Rank
           v-list-item-title {{profile.user.userGamedata.rank}}
       Divider(inset=16)
-      .d-flex.pa-2
-        div(style="width: 50%"): v-img(v-if="profile.userProfile.honorId1", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId1].assetbundleName}/degree_main.png`")
-        div(style="width: 25%"): v-img(v-if="profile.userProfile.honorId2", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId2].assetbundleName}/degree_sub.png`")
-        div(style="width: 25%"): v-img(v-if="profile.userProfile.honorId3", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId3].assetbundleName}/degree_sub.png`")
+      .d-flex.pa-2.justify-space-between
+        Honor(:id="profile.userProfile.honorId1", :level="profile.userProfile.honorLevel1", size=36)
+        Honor(:id="profile.userProfile.honorId2", :level="profile.userProfile.honorLevel2", size=36, type="sub")
+        Honor(:id="profile.userProfile.honorId3", :level="profile.userProfile.honorLevel3", size=36, type="sub")
+        //- div(style="width: 50%"): v-img(v-if="profile.userProfile.honorId1", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId1].assetbundleName}/degree_main.png`")
+        //- div(style="width: 25%"): v-img(v-if="profile.userProfile.honorId2", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId2].assetbundleName}/degree_sub.png`")
+        //- div(style="width: 25%"): v-img(v-if="profile.userProfile.honorId3", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId3].assetbundleName}/degree_sub.png`")
       Divider(inset=16)
       v-list-item
         v-list-item-content: v-list-item-title Player ID
@@ -45,13 +48,14 @@
 <script>
 import { get, set, del } from 'idb-keyval';
 import Divider from '@/components/Divider';
+import Honor from '@/components/Honor';
 
 export default {
   name: 'Profile',
 
   props: ['profile'],
 
-  components: { Divider },
+  components: { Divider, Honor },
 
   data() {
     return {

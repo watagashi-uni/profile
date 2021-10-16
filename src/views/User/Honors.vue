@@ -58,7 +58,8 @@ export default {
       return Object.values(honors);
     },
     rareHonors() {
-      return this.honors.filter(honor => honor.honorRarityLevel >= 3).sort((b, a) => (a.honorRarityLevel - b.honorRarityLevel));
+      let f = honor => honor.honorRarityLevel * 10 + honor.level;
+      return this.honors.filter(honor => f(honor) >= 23).sort((b, a) => (f(a) - f(b)));
     },
   }
 };
