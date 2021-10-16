@@ -12,7 +12,6 @@
           v-list-item(@click="show=true")
             v-list-item-title Show all honors
           Divider
-        .py-2
 
     v-expand-transition
       div(v-show="show")

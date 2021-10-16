@@ -10,10 +10,10 @@
         v-btn(icon, href="https://gitlab.com/circlelin", target="_blank")
           v-icon mdi-gitlab
       v-list-item-action.ma-0
-        v-btn(icon, href="https://twitter.com/nilcric", target="_blank")
+        v-btn(icon, href="https://twitter.com/nilcric_pjsekai", target="_blank")
           v-icon mdi-twitter
     Divider(inset=16)
-    v-list-item(href="https://shop-pjsekai.kirafan.cn", target="_blank")
+    v-list-item(href="https://shop.pjsekai.moe", target="_blank")
       v-list-item-content
         v-list-item-title.purple--text.text--lighten-2 Project Sekai Account Shop
         v-list-item-subtitle 

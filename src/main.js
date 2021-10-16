@@ -6,7 +6,7 @@ import router from './router';
 Vue.config.productionTip = false;
 
 Vue.prototype.$assets = function () {
-  // TODO: cache assets to kirafan.cn
+  // TODO: cache assets to pjsekai.moe
   return 'https://assets.pjsek.ai/file/pjsekai-assets/startapp';
 };
 
