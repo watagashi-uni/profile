@@ -14,7 +14,7 @@
         v-list-item-action(v-else-if="rankings[event.id].length == 0")
           v-list-item-action-text 0 P
         v-list-item-action(v-else)
-          v-list-item-title.align-self-end Rank {{rankings[event.id][0].rank}}
+          v-list-item-title.align-self-end # {{rankings[event.id][0].rank}}
           v-list-item-action-text {{rankings[event.id][0].score}} P
     Divider
 </template>
