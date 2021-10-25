@@ -32,16 +32,36 @@
         v-list-item(:href="`https://twitter.com/${profile.userProfile.twitterId}`", target="_blank")
           v-list-item-content: v-list-item-title Twitter
           v-list-item-action: v-list-item-action-text @{{profile.userProfile.twitterId}}
-          v-list-item-action.ma-0: v-icon(small) mdi-chevron-right
+          v-list-item-action.ml-2: v-icon(small) mdi-chevron-right
       Divider
     .py-2
     v-list.py-0(dense)
       Divider
       v-list-item(@click="follow", :disabled="following===undefined")
-        v-list-item-content: v-list-item-title.primary--text Follow
+        v-list-item-content
+          v-list-item-title.primary--text Follow
         v-list-item-action
           v-icon(v-if="following===true", color="primary") mdi-heart
           v-icon(v-if="following===false") mdi-heart-outline
+      v-expand-transition
+        div(v-show="following")
+          Divider(inset=16)
+          
+          v-dialog(v-model="dialog.show", width=360)
+            template(v-slot:activator="{on, attrs}")
+              v-list-item(v-on="on", v-bind="attrs")
+                v-list-item-content: v-list-item-title Friendly name
+                v-list-item-action: v-list-item-action-text {{friendlyName}}
+                v-list-item-action.ml-2: v-icon(small) mdi-square-edit-outline
+
+            v-card
+              v-card-title Edit friendly name
+              v-card-text
+                v-text-field(dense, v-model="dialog.input")
+              v-card-actions
+                v-btn(text, @click="dialog.show=false") Cancel
+                v-spacer
+                v-btn(text, color="primary", @click="submit") OK
       Divider
 </template>
 
@@ -60,6 +80,11 @@ export default {
   data() {
     return {
       following: undefined,
+      friendlyName: undefined,
+      dialog: {
+        show: false,
+        input: undefined,
+      }
     };
   },
 
@@ -72,20 +97,27 @@ export default {
   methods: {
     follow() {
       if (this.following === false) {
-        this.following = undefined;
-        set(this.id, {
-          user: this.profile.user,
-          userCard: this.profile.userCards.find(card => card.cardId == this.profile.userDecks[0].leader),
-          userProfile: this.profile.userProfile,
-        }).then(() => {
-          this.following = true;
-        });
+        this._follow();
       } else if (this.following === true) {
-        this.following = undefined;
-        del(this.id).then(() => {
-          this.following = false;
-        });
+        this._unfollow();
       }
+    },
+    _follow() {
+      this.following = undefined;
+      set(this.id, {
+        user: this.profile.user,
+        userCard: this.profile.userCards.find(card => card.cardId == this.profile.userDecks[0].leader),
+        userProfile: this.profile.userProfile,
+        friendlyName: this.friendlyName,
+      }).then(() => {
+        this.following = true;
+      });
+    },
+    _unfollow() {
+      this.following = undefined;
+      del(this.id).then(() => {
+        this.following = false;
+      });
     },
     load() {
       this.following = undefined;
@@ -93,7 +125,14 @@ export default {
       get(id).then(x => {
         if (id != this.id) return;
         this.following = Boolean(x);
+        this.friendlyName = x ? x.friendlyName : undefined;
+        this.dialog.input = this.friendlyName || this.profile.user.userGamedata.name;
       });
+    },
+    submit() {
+      this.dialog.show = false;
+      this.friendlyName = this.dialog.input;
+      this._follow();
     }
   },
 

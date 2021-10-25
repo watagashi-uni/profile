@@ -36,11 +36,16 @@ export default {
         score: false,
         userId: '16656056566779905',
         userCard: {
-          cardId: 135,
+          cardId: 249,
+          defaultImage: 'special_training',
         },
         userProfile: {
-          honorId1: 33,
-          honorLevel1: 1,
+          honorId1: 34,
+          honorLevel1: 32,
+          honorId2: 58,
+          honorLevel2: 32,
+          honorId3: 534,
+
         },
       }
     };

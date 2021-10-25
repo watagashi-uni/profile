@@ -6,10 +6,14 @@
   
   v-list.py-0(dense, v-else)
     Divider
-    transition-group(name="list", tag="div")
+    v-list-item-group(v-if="editing" v-model="model", multiple)
       template(v-for="user, i in rankings")
         Divider(inset=72, v-if="i", :key="`divider-${i}`")
-        User(:user="user", :key="`user-${user.userId || (user.userProfile && user.userProfile.userId)}`")
+        User(:user="user", :key="`user-${user.userId || (user.userProfile && user.userProfile.userId)}`", :editing="editing")
+    transition-group(v-else, name="list", tag="div")
+      template(v-for="user, i in rankings")
+        Divider(inset=72, v-if="i", :key="`divider-${i}`")
+        User(:user="user", :key="`user-${user.userId || (user.userProfile && user.userProfile.userId)}`", :editing="editing")
     div(v-if="rankings.length == 0")
       v-list-item
         v-list-item-content
@@ -25,9 +29,15 @@ import User from './User';
 export default {
   name: 'Rankings',
 
-  props: ['rankings'],
+  props: ['rankings', 'editing'],
 
   components: { Divider, User },
+
+  data() {
+    return {
+      model: [],
+    };
+  },
 };
 </script>
 

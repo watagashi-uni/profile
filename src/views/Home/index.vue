@@ -2,9 +2,7 @@
   div
     .d-block.d-md-none
       .py-2
-      v-list-item(dense)
-        v-list-item-title Followings 
-      Rankings(:rankings="followings")
+      Followings(:followings="followings")
       .py-2
       v-tabs(v-model="tab1", fixed-tabs)
         v-tab Tops
@@ -14,10 +12,6 @@
           Rankings(:rankings="tops")
         v-tab-item
           Rankings(:rankings="rankings")
-      //- v-list-item(dense)
-      //-   v-list-item-content
-      //-     v-list-item-subtitle The ranking is not real-time updated.
-      //-     v-list-item-subtitle Please do not use this for scheduling your event.
       .py-2
       v-list-item(dense)
         v-list-item-title About
@@ -27,9 +21,7 @@
     .d-none.d-md-flex.d-lg-none
       div(style="width: calc((100% - 1px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
-        v-list-item(dense)
-          v-list-item-title Followings 
-        Rankings(:rankings="followings")
+        Followings(:followings="followings")
         .py-2
         v-list-item(dense)
           v-list-item-title About
@@ -46,20 +38,13 @@
         v-tabs-items(v-model="tab2")
           v-tab-item: Rankings(:rankings="tops")
           v-tab-item: Rankings(:rankings="rankings")
-        //- v-list-item(dense)
-        //-   v-list-item-content
-        //-     v-list-item-subtitle The ranking is not real-time updated.
-        //-     v-list-item-subtitle Please do not use this for scheduling your event.
         .py-2
 
     .d-none.d-lg-flex
       div(style="width: calc((100% - 2px) / 3); height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
-        v-list-item(dense)
-          v-list-item-title Followings 
-        Rankings(:rankings="followings")
+        Followings(:followings="followings")
         .py-2
-
         v-list-item(dense)
           v-list-item-title About
         About
@@ -81,12 +66,7 @@
         v-list-item(dense)
           v-list-item-title Rankings 
         Rankings(:rankings="rankings")
-        //- v-list-item(dense)
-        //-   v-list-item-content
-        //-     v-list-item-subtitle The ranking is not real-time updated.
-        //-     v-list-item-subtitle Please do not use this for scheduling your event.
-        .py-2
-    
+        .py-2    
 
 </template>
 
@@ -95,12 +75,13 @@ import { set, values } from 'idb-keyval';
 
 import sekai from '@/sekai';
 import Rankings from './Rankings';
+import Followings from './Followings';
 import About from './About';
 
 export default {
   name: 'Home',
 
-  components: { Rankings, About },
+  components: { Rankings, Followings, About },
 
   data() {
     return {
@@ -179,8 +160,10 @@ export default {
           sekai(`/api/user/{user_id}/event/${this.eventId}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
             let ranking = response.rankings[0];
             if (ranking) {
-              Object.keys(ranking).forEach(key => user[key] = ranking[key]);
-              set(user.userProfile.userId, user);
+              if (ranking.userId == user.userProfile.userId) {
+                Object.keys(ranking).forEach(key => user[key] = ranking[key]);
+                set(user.userProfile.userId, user);
+              }
             } else {
               user.rank = 0;
               user.score = 0;
