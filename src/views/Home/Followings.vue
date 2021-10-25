@@ -61,11 +61,10 @@ export default {
     onImport(e) {
       let file = e.target.files[0];
       let fileReader = new FileReader();
-      let self = this;
       fileReader.readAsText(file);
       fileReader.onload = function () {
         Promise.all(JSON.parse(this.result).filter(user => user.user && user.userProfile).map(user => set(user.userProfile.userId, user))).then(() => {
-          self.$router.go(0);
+          window.location.reload();
         });
       };
     },
@@ -74,7 +73,7 @@ export default {
       if (model.length == 0) return;
       let users = model.map(x => this.followings[x]);
       Promise.all(users.map(user => del(user.userProfile.userId))).then(() => {
-        this.$router.go(0);
+        window.location.reload();
       });
     },
   }
