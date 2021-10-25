@@ -28,7 +28,8 @@
           span Loading Database...
 
       div(v-else)
-        router-view(keep-alive)
+        keep-alive
+          router-view
 </template>
 
 <script>
