@@ -2,6 +2,7 @@
   div
     v-list-item(dense)
       v-list-item-title Followings 
+      v-list-item-action: v-btn(icon, @click="onRefresh"): v-icon mdi-refresh
       v-list-item-action: v-btn(icon, @click="editing=!editing"): v-icon mdi-playlist-edit
     v-expand-transition
       v-list.py-0(dense, v-show="editing")
@@ -75,6 +76,9 @@ export default {
       Promise.all(users.map(user => del(user.userProfile.userId))).then(() => {
         window.location.reload();
       });
+    },
+    onRefresh() {
+      window.location.reload();
     },
   }
 };
