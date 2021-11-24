@@ -25,8 +25,8 @@
         v-list-item-action: v-list-item-action-text {{profile.userProfile.userId}}
       Divider(inset=16)
       v-list-item
-        v-list-item-content: v-list-item-title Registration date
-        v-list-item-action: v-list-item-action-text {{new Date(1600218000000 + profile.userProfile.userId / 2 ** 22).toLocaleDateString()}}
+        v-list-item-content: v-list-item-title Registration at
+        v-list-item-action: v-list-item-action-text {{new Date(1600218000000 + profile.userProfile.userId / 2 ** 22).toLocaleString()}}
       template(v-if="profile.userProfile.twitterId")
         Divider(inset=16)
         v-list-item(:href="`https://twitter.com/${profile.userProfile.twitterId}`", target="_blank")

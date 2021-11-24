@@ -39,7 +39,7 @@
       v-list-item
         .mr-4
           v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-            .rank.my-auto all
+            .rank.my-auto All
         v-list-item-subtitle
           .score {{Object.values($root.musics).length}}
       
@@ -47,52 +47,53 @@
 
     .py-2
 
-    .d-flex
-      v-list-item(dense)
-        v-list-item-title Recent Full Combo
-      v-list-item(dense)
-        v-list-item-title Recent All Perfect
+    //- .d-flex
+    //-   v-list-item(dense)
+    //-     v-list-item-title Recent Full Combo
+    //-   v-list-item(dense)
+    //-     v-list-item-title Recent All Perfect
 
-    .d-flex
-      div(style="width: calc(50% - 0.5px)")
-        v-list.py-0(dense)
-          Divider
-          template(v-for="result, i in recent['F'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
-            Divider(inset=72, v-if="i")
-            v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
-              v-list-item-avatar(tile)
-                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
-              v-list-item-content
-                v-list-item-title {{$root.musics[result.musicId].title}}
-                v-list-item-subtitle
-                  MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
-          template(v-if="recent['F'].length == 0")
-            v-list-item
-              v-list-item-content
-                v-list-item-subtitle None
-          Divider
+    //- .d-flex
+    //-   div(style="width: calc(50% - 0.5px)")
+    //-     v-list.py-0(dense)
+    //-       Divider
+    //-       template(v-for="result, i in recent['F'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
+    //-         Divider(inset=72, v-if="i")
+    //-         v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
+    //-           v-list-item-avatar(tile)
+    //-             v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
+    //-           v-list-item-content
+    //-             v-list-item-title {{$root.musics[result.musicId].title}}
+    //-             v-list-item-subtitle
+    //-               MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
+    //-       template(v-if="recent['F'].length == 0")
+    //-         v-list-item
+    //-           v-list-item-content
+    //-             v-list-item-subtitle None
+    //-       Divider
 
-      v-divider(vertical)
+    //-   v-divider(vertical)
 
-      div(style="width: calc(50% - 0.5px)")
-        v-list.py-0(dense)
-          Divider
-          template(v-for="result, i in recent['P'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
-            Divider(inset=72, v-if="i")
-            v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
-              v-list-item-avatar(tile)
-                v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
-              v-list-item-content
-                v-list-item-title {{$root.musics[result.musicId].title}}
-                v-list-item-subtitle
-                  MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
-          template(v-if="recent['P'].length == 0")
-            v-list-item
-              v-list-item-content
-                v-list-item-subtitle None
-          Divider
+    //-   div(style="width: calc(50% - 0.5px)")
+    //-     v-list.py-0(dense)
+    //-       Divider
+    //-       template(v-for="result, i in recent['P'].slice().sort((y, x) => x.createdAt - y.createdAt).slice(0, 5)")
+    //-         Divider(inset=72, v-if="i")
+    //-         v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
+    //-           v-list-item-avatar(tile)
+    //-             v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
+    //-           v-list-item-content
+    //-             v-list-item-title {{$root.musics[result.musicId].title}}
+    //-             v-list-item-subtitle
+    //-               MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
+    //-       template(v-if="recent['P'].length == 0")
+    //-         v-list-item
+    //-           v-list-item-content
+    //-             v-list-item-subtitle None
+    //-       Divider
 
-    .py-2
+    //- .py-2
+
     v-list-item(dense)
       v-list-item-title Details
 
@@ -126,7 +127,8 @@
 
       template(v-for="music, i in sortedMusics")
         Divider(inset=72, v-if="i")
-        v-list-item(:key="`musics-${music.musicId}`")
+
+        v-list-item(:key="`musics-${music.musicId}`", @click="detailID = detailID == music.musicId ? -1 : music.musicId")
           v-list-item-avatar(tile)
             v-img(:src="`${$assets()}/music/jacket/${$root.musics[music.musicId].assetbundleName}/${$root.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
@@ -138,6 +140,62 @@
               template(v-for="status, i in music.userMusicDifficultyStatuses")
                 .pr-2(v-if="i")
                 MusicDifficultyStatus(:key="`musics-difficulties-${status.musicDifficulty}`", :status="status", style="width: calc(20% - 3.2px)")
+        
+        v-expand-transition
+          div(v-show="detailID == music.musicId")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto Score
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      | {{status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0)}}
+            
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto MVP<br>SS
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      | {{status.userMusicResults.map(result => result.mvpCount).reduce((x, y) => x + y, 0)}}
+                      | / 
+                      | {{status.userMusicResults.map(result => result.superStarCount).reduce((x, y) => x + y, 0)}}
+
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto First<br>Play
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      span(v-if="status.userMusicResults.length")
+                        | {{new Date(status.userMusicResults.map(result => result.createdAt).reduce((x, y) => x < y ? x : y, Infinity)).format(`'YY/M/D`)}}
+                        br
+                        | {{new Date(status.userMusicResults.map(result => result.createdAt).reduce((x, y) => x < y ? x : y, Infinity)).format(`H:mm:ss`)}}
+                      span(v-else) -
+
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto Last<br>Play
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      span(v-if="status.userMusicResults.length")
+                        | {{new Date(status.userMusicResults.map(result => result.updatedAt).reduce((x, y) => x > y ? x : y, 0)).format(`'YY/M/D`)}}
+                        br
+                        | {{new Date(status.userMusicResults.map(result => result.updatedAt).reduce((x, y) => x > y ? x : y, 0)).format(`H:mm:ss`)}}
+                      span(v-else) -
 
       Divider
 </template>
@@ -176,6 +234,8 @@ export default {
       sort: 'Default',
       sortDifficulty: 'master',
       sortOrder: 1,
+
+      detailID: -1,
     };
   },
 
@@ -284,27 +344,29 @@ export default {
 
       return result;
     },
-    recent() {
-      let userMusicResults = {
-        'C': [],
-        'F': [],
-        'P': [],
-      };
-      for (let music of this.profile.userMusics) {
-        for (let status of music.userMusicDifficultyStatuses) {
-          if (status.userMusicResults.length) {
-            let userMusicResult = status.userMusicResults.reduce((x, y) => x.playResult > y.playResult ? x : y);
-            let rank = {
-              'full_perfect': 'P',
-              'full_combo': 'F',
-              'clear': 'C',
-            }[userMusicResult.playResult];
-            userMusicResults[rank].push(userMusicResult);
-          }
-        }
-      }
-      return userMusicResults;
-    },
+    // recent full combo / all perfect is not computable. 
+    //
+    // recent() {
+    //   let userMusicResults = {
+    //     'C': [],
+    //     'F': [],
+    //     'P': [],
+    //   };
+    //   for (let music of this.profile.userMusics) {
+    //     for (let status of music.userMusicDifficultyStatuses) {
+    //       if (status.userMusicResults.length) {
+    //         let userMusicResult = status.userMusicResults.reduce((x, y) => x.playResult > y.playResult ? x : y);
+    //         let rank = {
+    //           'full_perfect': 'P',
+    //           'full_combo': 'F',
+    //           'clear': 'C',
+    //         }[userMusicResult.playResult];
+    //         userMusicResults[rank].push(userMusicResult);
+    //       }
+    //     }
+    //   }
+    //   return userMusicResults;
+    // },
     options() {
       let minLevel = 0, maxLevel = 0;
       for (let musicId in this.$root.musicDifficulties) {
@@ -421,9 +483,11 @@ export default {
 <style scoped>
 .difficulty,
 .rank,
-.score {
+.score,
+.cell {
   white-space: nowrap;
   text-align: center;
+  width: 100%;
 }
 
 .difficulty {
@@ -431,7 +495,6 @@ export default {
   border-bottom-left-radius: 16px;
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
-  width: 100%;
 }
 
 .rank {
@@ -439,11 +502,9 @@ export default {
   border-bottom-left-radius: 16px;
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
-  width: 100%;
 }
 
 .score {
   font-size: 80%;
-  width: 100%;
 }
 </style>

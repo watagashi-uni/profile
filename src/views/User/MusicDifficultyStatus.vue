@@ -7,7 +7,8 @@
     .d-flex
       .difficulty(:style="style.difficulty") {{$root.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
       .rank(:style="style.rank")
-        span(v-if="status.userMusicResults.length == 0") 
+        v-icon(v-if="status.musicDifficultyStatus != 'available'", x-small, color="#FFFFFF99") mdi-lock
+        span(v-else-if="status.userMusicResults.length == 0") 
         span(v-else) {{rank}}
     .d-flex
       .score(:style="style.score")
@@ -31,7 +32,11 @@ export default {
       }[result.playResult])).reduce((x, y) => x > y ? x : y, '');
     },
     _score() {
-      return this.score || this.status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0);
+      return this.score;
+      // score in music result is not reliable
+      // since the best score may not occur together with fc or ap
+      //
+      // || this.status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0);
     },
     style() {
       return {
