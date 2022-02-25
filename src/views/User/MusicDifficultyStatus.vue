@@ -5,7 +5,7 @@
   
   div
     .d-flex
-      .difficulty(:style="style.difficulty") {{$root.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
+      .difficulty(:style="style.difficulty") {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
       .rank(:style="style.rank")
         v-icon(v-if="status.musicDifficultyStatus != 'available'", x-small, color="#FFFFFF99") mdi-lock
         span(v-else-if="status.userMusicResults.length == 0") 

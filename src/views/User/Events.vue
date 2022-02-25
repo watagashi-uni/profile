@@ -1,11 +1,11 @@
 <template lang="pug">
   v-list.py-0(dense)
     Divider
-    template(v-for="event, i in Object.values($root.events).filter(event => event.id >= this.$eventID()).reverse()")
+    template(v-for="event, i in Object.values($db.events).filter(event => event.id >= this.$sekai.eventStartID).reverse()")
       Divider(inset=112, v-if="i")
       v-list-item(:key="`events-${event.id}`")
         .my-2.mr-4(style="height: 40px; width: 80px")
-          v-img(:src="`${$assets()}/../ondemand/event/${event.assetbundleName}/logo/logo/logo.png`")
+          v-img(:src="`${$sekai.assetHost}/../ondemand/event/${event.assetbundleName}/logo/logo/logo.png`")
         v-list-item-content
           v-list-item-title {{event.name}}
           v-list-item-subtitle {{new Date(event.startAt).toLocaleDateString()}}

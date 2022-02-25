@@ -20,10 +20,9 @@
           v-tab achievement
           v-tab event
         v-tabs-items(v-model="tab")
-          v-tab-item: HonorList(:honors="honors.filter(honor => $root.honorGroups[honor.groupId].honorType == 'character')")
-          v-tab-item: HonorList(:honors="honors.filter(honor => $root.honorGroups[honor.groupId].honorType == 'achievement')")
-          v-tab-item: HonorList(:honors="honors.filter(honor => $root.honorGroups[honor.groupId].honorType == 'event')")
-        
+          v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'character')")
+          v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'achievement')")
+          v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'event')")
 
 </template>
 
@@ -49,9 +48,9 @@ export default {
     honors() {
       let honors = {};
       for (let honor of this.profile.userHonors) {
-        let groupId = this.$root.honors[honor.honorId].groupId;
+        let groupId = this.$db.honors[honor.honorId].groupId;
         honor.groupId = groupId;
-        honor.honorRarityLevel = ['', 'low', 'middle', 'high', 'highest'].indexOf(this.$root.honors[honor.honorId].honorRarity);
+        honor.honorRarityLevel = ['', 'low', 'middle', 'high', 'highest'].indexOf(this.$db.honors[honor.honorId].honorRarity);
         honors[groupId] = honor;
       }
       return Object.values(honors);

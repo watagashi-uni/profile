@@ -41,7 +41,7 @@
           v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
             .rank.my-auto All
         v-list-item-subtitle
-          .score {{Object.values($root.musics).length}}
+          .score {{Object.values($db.musics).length}}
       
       Divider
 
@@ -61,9 +61,9 @@
     //-         Divider(inset=72, v-if="i")
     //-         v-list-item(:key="`recent-f-${result.musicId}-${result.musicDifficulty}`")
     //-           v-list-item-avatar(tile)
-    //-             v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
+    //-             v-img(:src="`${$sekai.assetHost}/music/jacket/${$db.musics[result.musicId].assetbundleName}/${$db.musics[result.musicId].assetbundleName}.png`")
     //-           v-list-item-content
-    //-             v-list-item-title {{$root.musics[result.musicId].title}}
+    //-             v-list-item-title {{$db.musics[result.musicId].title}}
     //-             v-list-item-subtitle
     //-               MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
     //-       template(v-if="recent['F'].length == 0")
@@ -81,9 +81,9 @@
     //-         Divider(inset=72, v-if="i")
     //-         v-list-item(:key="`recent-p-${result.musicId}-${result.musicDifficulty}`")
     //-           v-list-item-avatar(tile)
-    //-             v-img(:src="`${$assets()}/music/jacket/${$root.musics[result.musicId].assetbundleName}/${$root.musics[result.musicId].assetbundleName}.png`")
+    //-             v-img(:src="`${$sekai.assetHost}/music/jacket/${$db.musics[result.musicId].assetbundleName}/${$db.musics[result.musicId].assetbundleName}.png`")
     //-           v-list-item-content
-    //-             v-list-item-title {{$root.musics[result.musicId].title}}
+    //-             v-list-item-title {{$db.musics[result.musicId].title}}
     //-             v-list-item-subtitle
     //-               MusicDifficultyStatus(:score="new Date(result.createdAt).toLocaleDateString()", :status="{ musicId: result.musicId, musicDifficulty: result.musicDifficulty, userMusicResults: [ result ] }", style="width: calc(40% + 11.41px)")
     //-       template(v-if="recent['P'].length == 0")
@@ -130,12 +130,12 @@
 
         v-list-item(:key="`musics-${music.musicId}`", @click="detailID = detailID == music.musicId ? -1 : music.musicId")
           v-list-item-avatar(tile)
-            v-img(:src="`${$assets()}/music/jacket/${$root.musics[music.musicId].assetbundleName}/${$root.musics[music.musicId].assetbundleName}.png`")
+            v-img(:src="`${$sekai.assetHost}/music/jacket/${$db.musics[music.musicId].assetbundleName}/${$db.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
             v-list-item-title.d-flex
               v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="sort == 'ID'") {{music.musicId}}
-              v-list-item-subtitle.pr-2(style="flex: 0 1 auto", v-if="sort == 'Release time'") {{new Date($root.musics[music.musicId].publishedAt).toLocaleDateString()}}
-              span {{$root.musics[music.musicId].title}}
+              v-list-item-subtitle.pr-2(style="flex: 0 1 auto", v-if="sort == 'Release time'") {{new Date($db.musics[music.musicId].publishedAt).toLocaleDateString()}}
+              span {{$db.musics[music.musicId].title}}
             v-list-item-subtitle.d-flex
               template(v-for="status, i in music.userMusicDifficultyStatuses")
                 .pr-2(v-if="i")
@@ -260,11 +260,11 @@ export default {
     },
     sortFunctions() {
       return {
-        default: music => this.$root.musics[music.musicId].seq,
+        default: music => this.$db.musics[music.musicId].seq,
         id: music => music.musicId,
-        name: music => this.$root.musics[music.musicId].title.toLowerCase(),
-        releaseTime: music => this.$root.musics[music.musicId].publishedAt,
-        level: music => this.$root.musicDifficulties[music.musicId][this.sortDifficulty].playLevel,
+        name: music => this.$db.musics[music.musicId].title.toLowerCase(),
+        releaseTime: music => this.$db.musics[music.musicId].publishedAt,
+        level: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevel,
         rank: music => music.userMusicDifficultyStatuses.find(status => status.musicDifficulty == this.sortDifficulty).userMusicResults.map(result => ({
           'full_perfect': 'P',
           'full_combo': 'F',
@@ -294,7 +294,7 @@ export default {
       };
       for (let music of this.profile.userMusics) {
         for (let status of music.userMusicDifficultyStatuses) {
-          let level = this.$root.musicDifficulties[music.musicId][status.musicDifficulty].playLevel;
+          let level = this.$db.musicDifficulties[music.musicId][status.musicDifficulty].playLevel;
           let rank = status.userMusicResults.map(result => ({
             'full_perfect': 'P',
             'full_combo': 'F',
@@ -307,9 +307,9 @@ export default {
           if (rank >= 'P') result['P'][level] += 1;
         }
       }
-      for (let musicId in this.$root.musicDifficulties) {
-        for (let musicDifficulty in this.$root.musicDifficulties[musicId]) {
-          let level = this.$root.musicDifficulties[musicId][musicDifficulty].playLevel;
+      for (let musicId in this.$db.musicDifficulties) {
+        for (let musicDifficulty in this.$db.musicDifficulties[musicId]) {
+          let level = this.$db.musicDifficulties[musicId][musicDifficulty].playLevel;
           result['All'][level] += 1;
         }
       }
@@ -369,9 +369,9 @@ export default {
     // },
     options() {
       let minLevel = 0, maxLevel = 0;
-      for (let musicId in this.$root.musicDifficulties) {
-        for (let musicDifficulty in this.$root.musicDifficulties[musicId]) {
-          let level = this.$root.musicDifficulties[musicId][musicDifficulty].playLevel;
+      for (let musicId in this.$db.musicDifficulties) {
+        for (let musicDifficulty in this.$db.musicDifficulties[musicId]) {
+          let level = this.$db.musicDifficulties[musicId][musicDifficulty].playLevel;
           if (!minLevel) {
             minLevel = level;
             maxLevel = level;

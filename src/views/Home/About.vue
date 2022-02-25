@@ -39,14 +39,22 @@ export default {
           cardId: 249,
           defaultImage: 'special_training',
         },
-        userProfile: {
-          honorId1: 34,
-          honorLevel1: 32,
-          honorId2: 58,
-          honorLevel2: 32,
-          honorId3: 534,
-
-        },
+        userProfileHonors: [
+          {
+            seq: 1,
+            honorId: 34,
+            honorLevel: 32,
+          },
+          {
+            seq: 2,
+            honorId: 58,
+            honorLevel: 32,
+          },
+          {
+            seq: 3,
+            honorId: 534,
+          },
+        ],
       }
     };
   }

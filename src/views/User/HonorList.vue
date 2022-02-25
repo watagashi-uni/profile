@@ -7,10 +7,10 @@
         .my-2.mr-4
           Honor(:id="honor.honorId", :level="honor.level", size=36)
         v-list-item-content
-          v-list-item-title {{$root.honorGroups[$root.honors[honor.honorId].groupId].name}}
+          v-list-item-title {{$db.honorGroups[$db.honors[honor.honorId].groupId].name}}
           v-list-item-subtitle
-            span(v-if="$root.honorGroups[$root.honors[honor.honorId].groupId].name != $root.honors[honor.honorId].name") {{$root.honors[honor.honorId].name}}
-            span(v-if="$root.honors[honor.honorId].levels.length > 1") Lv. {{honor.level}}
+            span(v-if="$db.honorGroups[$db.honors[honor.honorId].groupId].name != $db.honors[honor.honorId].name") {{$db.honors[honor.honorId].name}}
+            span(v-if="$db.honors[honor.honorId].levels.length > 1") Lv. {{honor.level}}
     Divider
 </template>
 

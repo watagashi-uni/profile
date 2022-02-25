@@ -1,6 +1,9 @@
 <template lang="pug">
   div
-    div(:style="style")
+    div(v-if="type=='normal'", :style="style")
+      slot
+    div(v-else-if="type=='bonds'", :style="style")
+      | WIP
       slot
 </template>
 
@@ -12,18 +15,19 @@ export default {
     id: {},
     level: {},
     size: { default: 40 },
-    type: { default: 'main' },
+    type: { default: 'normal' },
+    sub: { default: false, type: Boolean },
   },
 
   computed: {
     isMain() {
-      return this.type == 'main';
+      return !this.sub;
     },
     honor() {
-      return this.$root.honors[this.id];
+      return this.$db.honors[this.id];
     },
     honorGroup() {
-      return this.$root.honorGroups[this.honor.groupId];
+      return this.$db.honorGroups[this.honor.groupId];
     },
     style() {
       let height = this.size;
@@ -53,32 +57,32 @@ export default {
         }
 
         if (this.honorGroup.honorType == 'character') {
-          images.push(`url(${this.$assets()}/honor/${this.honor.assetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
+          images.push(`url(${this.$sekai.assetHost}/honor/${this.honor.assetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
           sizes.push('100% 100%');
           positions.push('center');
         }
 
         if (this.honorGroup.honorType == 'achievement') {
-          images.push(`url(${this.$assets()}/honor/${this.honor.assetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
+          images.push(`url(${this.$sekai.assetHost}/honor/${this.honor.assetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
           sizes.push('100% 100%');
           positions.push('center');
         }
 
         if (this.honorGroup.honorType == 'event') {
           if (this.honorGroup.backgroundAssetbundleName) {
-            images.push(`url(${this.$assets()}/honor/${this.honor.assetbundleName}/rank_${this.isMain ? 'main' : 'sub'}.png)`);
+            images.push(`url(${this.$sekai.assetHost}/honor/${this.honor.assetbundleName}/rank_${this.isMain ? 'main' : 'sub'}.png)`);
             sizes.push(this.isMain ? 'calc(150% / 3.80) calc(78% / 0.80)' : 'calc(120% / 1.80) calc(38% / 0.80)');
             positions.push(this.isMain ? 'calc(190% / 2.30) center' : 'center calc(38% / 0.40)');
 
-            images.push(`url(${this.$assets()}/honor/${this.honorGroup.backgroundAssetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
+            images.push(`url(${this.$sekai.assetHost}/honor/${this.honorGroup.backgroundAssetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
             sizes.push('100% 100%');
             positions.push('center');
           } else {
-            images.push(`url(${this.$assets()}/honor/${this.honor.assetbundleName}/rank_${this.isMain ? 'main' : 'sub'}.png)`);
+            images.push(`url(${this.$sekai.assetHost}/honor/${this.honor.assetbundleName}/rank_${this.isMain ? 'main' : 'sub'}.png)`);
             sizes.push(this.isMain ? 'calc(150% / 3.80) calc(78% / 0.80)' : 'calc(120% / 1.80) calc(38% / 0.80)');
             positions.push(this.isMain ? 'calc(190% / 2.30) center' : 'center calc(38% / 0.40)');
 
-            images.push(`url(${this.$assets()}/honor/${this.honor.assetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
+            images.push(`url(${this.$sekai.assetHost}/honor/${this.honor.assetbundleName}/degree_${this.isMain ? 'main' : 'sub'}.png)`);
             sizes.push('100% 100%');
             positions.push('center');
           }

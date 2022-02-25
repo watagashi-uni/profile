@@ -100,7 +100,7 @@ export default {
 
   data() {
     let rankings = {};
-    Object.values(this.$root.events).forEach(event => rankings[event.id] = null);
+    Object.values(this.$db.events).forEach(event => rankings[event.id] = null);
     return {
       profile: null,
       rankings: rankings,
@@ -116,12 +116,12 @@ export default {
       this.profile = null;
       Object.keys(this.rankings).forEach(i => this.rankings[i] = null);
 
-      sekai(`/api/user/${this.id}/profile`).then(response => {
+      sekai.api(`/api/user/${this.id}/profile`).then(response => {
         if (id != this.id) return;
         this.profile = response;
       }).then(() => {
-        Object.values(this.$root.events).filter(event => event.id >= this.$eventID()).forEach(event => {
-          sekai(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
+        Object.values(this.$db.events).filter(event => event.id >= this.$sekai.eventStartID).forEach(event => {
+          sekai.api(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
             if (id != this.id) return;
             this.rankings[event.id] = response.rankings;
           });

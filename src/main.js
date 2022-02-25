@@ -6,10 +6,19 @@ import './registerServiceWorker';
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$assets = function () {
-  // TODO: cache assets to pjsekai.moe
-  return 'https://assets.pjsek.ai/file/pjsekai-assets/startapp';
-};
+import sekai from './sekai';
+
+Object.defineProperty(Vue.prototype, '$sekai', {
+  get: function () {
+    return sekai;
+  }
+});
+
+Object.defineProperty(Vue.prototype, '$db', {
+  get: function () {
+    return sekai.database;
+  }
+});
 
 Vue.prototype.$eventID = function () {
   return 31;

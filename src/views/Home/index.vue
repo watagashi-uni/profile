@@ -104,7 +104,7 @@ export default {
 
   computed: {
     eventId() {
-      return Object.values(this.$root.events).reduce((a, b) => {
+      return Object.values(this.$db.events).reduce((a, b) => {
         if (a.startAt > new Date()) return b;
         if (b.startAt > new Date()) return a;
         if (a.startAt > b.startAt) return a;
@@ -119,11 +119,11 @@ export default {
       this.rankings = [];
       this.followings = [];
 
-      sekai(`/api/user/{user_id}/event/${this.eventId}/ranking?targetRank=1&lowerLimit=99`).then(response => {
+      sekai.api(`/api/user/{user_id}/event/${this.eventId}/ranking?targetRank=1&lowerLimit=99`).then(response => {
         this.tops = response.rankings;
       });
       this.ranks.forEach(rank => {
-        sekai(`/api/user/{user_id}/event/${this.eventId}/ranking?targetRank=${rank}`).then(response => {
+        sekai.api(`/api/user/{user_id}/event/${this.eventId}/ranking?targetRank=${rank}`).then(response => {
           let ranking = response.rankings[0];
           if (ranking) {
             this.rankings.push(ranking);
@@ -157,7 +157,7 @@ export default {
             user.score = 0;
           }
           this.followings.push(user);
-          sekai(`/api/user/{user_id}/event/${this.eventId}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
+          sekai.api(`/api/user/{user_id}/event/${this.eventId}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
             let ranking = response.rankings[0];
             if (ranking) {
               if (ranking.userId == user.userProfile.userId) {

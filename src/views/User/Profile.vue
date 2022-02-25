@@ -4,7 +4,7 @@
       Divider
       v-list-item
         v-list-item-avatar
-          v-img(:src="`${$assets()}/thumbnail/chara/${$root.cards[profile.userDecks[0].leader].assetbundleName}_${profile.userCards.find(card => card.cardId == profile.userDecks[0].leader).defaultImage == 'special_training' ? 'after_training' : 'normal'}.png`")
+          v-img(:src="`${$sekai.assetHost}/thumbnail/chara/${$db.cards[profile.userDecks[0].leader].assetbundleName}_${profile.userCards.find(card => card.cardId == profile.userDecks[0].leader).defaultImage == 'special_training' ? 'after_training' : 'normal'}.png`")
         v-list-item-content
           v-list-item-title {{profile.user.userGamedata.name}}
           v-list-item-subtitle.text-wrap {{profile.userProfile.word}}
@@ -12,13 +12,8 @@
           v-list-item-action-text Rank
           v-list-item-title {{profile.user.userGamedata.rank}}
       Divider(inset=16)
-      .d-flex.pa-2.justify-space-between
-        Honor(:id="profile.userProfile.honorId1", :level="profile.userProfile.honorLevel1", size=36)
-        Honor(:id="profile.userProfile.honorId2", :level="profile.userProfile.honorLevel2", size=36, type="sub")
-        Honor(:id="profile.userProfile.honorId3", :level="profile.userProfile.honorLevel3", size=36, type="sub")
-        //- div(style="width: 50%"): v-img(v-if="profile.userProfile.honorId1", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId1].assetbundleName}/degree_main.png`")
-        //- div(style="width: 25%"): v-img(v-if="profile.userProfile.honorId2", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId2].assetbundleName}/degree_sub.png`")
-        //- div(style="width: 25%"): v-img(v-if="profile.userProfile.honorId3", contain, height=40, :src="`${$assets()}/honor/${$root.honors[profile.userProfile.honorId3].assetbundleName}/degree_sub.png`")
+      .pa-2
+        ProfileHonors(:userProfileHonors="profile.userProfileHonors", size=36)
       Divider(inset=16)
       v-list-item
         v-list-item-content: v-list-item-title Player ID
@@ -68,14 +63,14 @@
 <script>
 import { get, set, del } from 'idb-keyval';
 import Divider from '@/components/Divider';
-import Honor from '@/components/Honor';
+import ProfileHonors from '@/components/ProfileHonors';
 
 export default {
   name: 'Profile',
 
   props: ['profile'],
 
-  components: { Divider, Honor },
+  components: { Divider, ProfileHonors },
 
   data() {
     return {
