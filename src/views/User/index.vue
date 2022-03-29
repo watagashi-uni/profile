@@ -10,42 +10,39 @@
       Profile(:profile="profile")
       .py-2
       v-tabs(v-model="tab1", fixed-tabs)
-        v-tab musics
-        v-tab events
-        v-tab characters
+        v-tab: v-icon mdi-music
+        v-tab: v-icon mdi-calendar-text
+        v-tab: v-icon mdi-crown
+        v-tab: v-icon mdi-heart
       v-tabs-items(v-model="tab1")
         v-tab-item: Musics(:profile="profile")
-        v-tab-item
-          Events(:profile="profile", :rankings="rankings")
-          .py-2
-          v-list-item(dense)
-            v-list-item-title Honors
-          Honors(:profile="profile")
+        v-tab-item: Events(:profile="profile", :rankings="rankings")
+        v-tab-item: Honors(:profile="profile")
         v-tab-item: Characters(:profile="profile")
       .py-2
 
     .d-none.d-md-flex.d-lg-none
-      div(style="width: 360px; max-height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc(360px + (100% - 720px) / 4); max-height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
         Profile(:profile="profile")
         .py-2
-        v-list-item(dense)
-          v-list-item-title Characters
-        Characters(:profile="profile")
+        v-tabs(v-model="tab2", fixed-tabs)
+          v-tab: v-icon mdi-calendar-text
+          v-tab: v-icon mdi-crown
+          v-tab: v-icon mdi-heart
+        v-tabs-items(v-model="tab2")
+          v-tab-item: Events(:profile="profile", :rankings="rankings")
+          v-tab-item: Honors(:profile="profile")
+          v-tab-item: Characters(:profile="profile")
         .py-2
 
       v-divider(vertical)
 
-      div(style="width: calc(100% - 361px); max-height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc(100% - 360px - 1px - (100% - 720px) / 4); max-height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
-        v-tabs(v-model="tab2", fixed-tabs)
-          v-tab musics
-          v-tab events
-          v-tab honors
-        v-tabs-items(v-model="tab2")
-          v-tab-item: Musics(:profile="profile")
-          v-tab-item: Events(:profile="profile", :rankings="rankings")
-          v-tab-item: Honors(:profile="profile")
+        v-list-item(dense)
+          v-list-item-title Musics
+        Musics(:profile="profile")
         .py-2
     
     .d-none.d-lg-flex
@@ -60,7 +57,7 @@
 
       v-divider(vertical)
 
-      div(style="width: calc((100% - 362px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc(100% - 720px - 2px - (100% - 1080px) / 4); height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
         v-list-item(dense)
           v-list-item-title Musics
@@ -69,15 +66,14 @@
 
       v-divider(vertical)
 
-      div(style="width: calc((100% - 362px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
+      div(style="width: calc(360px + (100% - 1080px) / 4); height: calc(100vh - 64px); overflow-y: scroll")
         .py-2
-        v-list-item(dense)
-          v-list-item-title Events
-        Events(:profile="profile", :rankings="rankings")
-        .py-2
-        v-list-item(dense)
-          v-list-item-title Honors
-        Honors(:profile="profile")
+        v-tabs(v-model="tab3", fixed-tabs)
+          v-tab: v-icon mdi-calendar-text
+          v-tab: v-icon mdi-crown
+        v-tabs-items(v-model="tab3")
+          v-tab-item: Events(:profile="profile", :rankings="rankings")
+          v-tab-item: Honors(:profile="profile")
         .py-2
 
 </template>
@@ -107,6 +103,7 @@ export default {
 
       tab1: null,
       tab2: null,
+      tab3: null,
     };
   },
 

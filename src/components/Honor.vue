@@ -3,7 +3,7 @@
     div(v-if="type=='normal'", :style="style")
       slot
     div(v-else-if="type=='bonds'", :style="style")
-      | WIP
+      | TODO
       slot
 </template>
 

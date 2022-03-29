@@ -8,10 +8,10 @@ Vue.use(Vuetify);
 export default new Vuetify({
   breakpoint: {
     thresholds: {
-      xs: 512,
-      sm: 768,
-      md: 1024,
-      lg: 1280,
+      xs: 360,
+      sm: 720,
+      md: 1080,
+      lg: 1440,
     },
     scrollBarWidth: 0,
   },

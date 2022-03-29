@@ -70,4 +70,15 @@ export default {
 .v-tabs-items {
   background-color: #00000000 !important;
 }
+.v-btn--active.no-active::before {
+  opacity: 0 !important;
+}
+.v-slide-group__prev--disabled {
+  display: none !important;
+}
+.theme--dark.v-tabs-items {
+  background-color: transparent !important;
+}
+</style>
+
 </style>

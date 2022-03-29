@@ -2,7 +2,7 @@
   div
     v-list.py-0(dense)
       Divider
-      div(ref="summary", style="height: 270px")
+      div(ref="summary", style="height: 270px; width: calc(100% - 1px)")
       v-select.px-4(dense, v-model="showRank", :items="showRanks")
       Divider
     
@@ -105,22 +105,40 @@
           template(v-slot:activator="{on, attrs}")
             .d-flex.mr-4.text-center(v-ripple, v-on="on", v-bind="attrs", style="height: 40px")
               .ma-auto(style="width: 40px")
-                v-list-item-subtitle(v-if="sort == 'Level' || sort == 'Rank'") {{sort}}
+                v-list-item-subtitle(v-if="sorts[sortID].byDifficulty") {{sorts[sortID].name}}
                 v-icon(v-else) mdi-menu-{{sortOrder > 0 ? 'up' : 'down'}}
-          v-list(dense)
-            v-list-item(v-for="item in sortItems", :key="`sort-${item.sort}`", @click="sort = item.sort; sortOrder = item.sortOrder")
-              v-icon mdi-menu-{{item.sortOrder > 0 ? 'up' : 'down'}}
-              v-list-item-title {{item.sort}}
+          v-card.d-flex(elevation=24)
+            v-list.py-0(dense)
+              v-list-item
+                v-list-item-subtitle Sort by music
+              Divider
+              template(v-for="sort, i in Object.values(sorts).filter(sort => !sort.byDifficulty)")
+                Divider(inset=48, v-if="i")
+                v-list-item(:key="`sort-${sort.id}`", @click="sortByID(sort.id)")
+                  v-icon.pr-2 mdi-menu-{{(sortID == sort.id ? -sortOrder : sort.sortOrder) > 0 ? 'up' : 'down'}}
+                  v-list-item-title {{sort.name}}
+              Divider
+            v-divider(vertical)
+            v-list.py-0(dense)
+              v-list-item
+                v-list-item-subtitle Sort by score
+              Divider
+              template(v-for="sort, i in Object.values(sorts).filter(sort => sort.byDifficulty)")
+                Divider(inset=48, v-if="i")
+                v-list-item(:key="`sort-${sort.id}`", @click="sortByID(sort.id)")
+                  v-icon.pr-2 mdi-menu-{{(sortID == sort.id ? -sortOrder : sort.sortOrder) > 0 ? 'up' : 'down'}}
+                  v-list-item-title {{sort.name}}
+              Divider
 
         div(style="width: 100%")
           .d-flex(style="height: 40px; position: absolute;")
             v-list-item-subtitle.my-auto
-              span(v-if="sort != 'Level' && sort != 'Rank'") {{sort}}
+              span(v-if="!sorts[sortID].byDifficulty") {{sorts[sortID].name}}
           .d-flex
             template(v-for="difficulty, i in difficulties")
               .pr-2(v-if="i")
               .d-flex.text-center(v-ripple, @click="sortByDifficulty(difficulty)", style="height: 40px; width: calc(20% - 3.2px); z-index: 1")
-                .ma-auto(v-if="sort == 'Level' || sort == 'Rank'")
+                .ma-auto(v-if="sorts[sortID].byDifficulty")
                   v-icon(v-if="difficulty == sortDifficulty") mdi-menu-{{sortOrder > 0 ? 'up' : 'down'}}
 
       Divider
@@ -133,16 +151,29 @@
             v-img(:src="`${$sekai.assetHost}/music/jacket/${$db.musics[music.musicId].assetbundleName}/${$db.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
             v-list-item-title.d-flex
-              v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="sort == 'ID'") {{music.musicId}}
-              v-list-item-subtitle.pr-2(style="flex: 0 1 auto", v-if="sort == 'Release time'") {{new Date($db.musics[music.musicId].publishedAt).toLocaleDateString()}}
+              v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="sortID == 'id'") {{music.musicId}}
+              v-list-item-subtitle.pr-2(style="flex: 0 1 auto", v-if="sortID == 'releaseTime'") {{new Date($db.musics[music.musicId].publishedAt).toLocaleDateString()}}
               span {{$db.musics[music.musicId].title}}
             v-list-item-subtitle.d-flex
               template(v-for="status, i in music.userMusicDifficultyStatuses")
                 .pr-2(v-if="i")
                 MusicDifficultyStatus(:key="`musics-difficulties-${status.musicDifficulty}`", :status="status", style="width: calc(20% - 3.2px)")
-        
+
         v-expand-transition
           div(v-show="detailID == music.musicId")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto Notes
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      | {{$db.musicDifficulties[status.musicId][status.musicDifficulty].noteCount}}
+
+            Divider(inset=72)
+
             v-list-item
               .mr-4
                 v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
@@ -153,7 +184,7 @@
                     .pr-2(v-if="i")
                     .cell.score(style="width: calc(20% - 3.2px)")
                       | {{status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0)}}
-            
+
             v-list-item
               .mr-4
                 v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
@@ -219,10 +250,10 @@ export default {
       chart: null,
       showRank: 'All',
       showRanks: [
-        { text: 'Show as bars', value: 'bar' },
-        { text: 'Show all musics', value: 'All' },
-        { text: 'Show unlocked musics', value: 'Unlocked' },
-        { text: 'Show cleared musics', value: 'C' },
+        { text: 'Bars', value: 'bar' },
+        { text: 'Default', value: 'All' },
+        // { text: 'Show unlocked musics', value: 'Unlocked' },
+        // { text: 'Show cleared musics', value: 'C' },
       ],
       ranks: [
         { name: 'All', color: '#333333', hint: 'All' },
@@ -231,7 +262,7 @@ export default {
         { name: 'F', color: '#F06292', hint: 'Full Combo' },
         { name: 'P', color: '#FFFFFF', hint: 'All Perfect' },
       ],
-      sort: 'Default',
+      sortID: 'default',
       sortDifficulty: 'master',
       sortOrder: 1,
 
@@ -248,15 +279,65 @@ export default {
       expert: '#E57373',
       master: '#BA68C8',
     }),
-    sortItems() {
-      return [
-        { sort: 'Default', sortOrder: 1, sortFunctions: [this.sortFunctions.default] },
-        { sort: 'ID', sortOrder: 1, sortFunctions: [this.sortFunctions.id] },
-        { sort: 'Name', sortOrder: 1, sortFunctions: [this.sortFunctions.name] },
-        { sort: 'Release time', sortOrder: -1, sortFunctions: [this.sortFunctions.releaseTime, this.sortFunctions.default] },
-        { sort: 'Level', sortOrder: 1, sortFunctions: [this.sortFunctions.level, this.sortFunctions.default] },
-        { sort: 'Rank', sortOrder: -1, sortFunctions: [this.sortFunctions.rank, this.sortFunctions.level, this.sortFunctions.default] },
-      ];
+    sorts() {
+      return {
+        default: {
+          id: 'default',
+          name: 'Default',
+          byDifficulty: false,
+          sortOrder: 1,
+          sortFunctions: [this.sortFunctions.default],
+        },
+        id: {
+          id: 'id',
+          name: 'ID',
+          byDifficulty: false,
+          sortOrder: 1,
+          sortFunctions: [this.sortFunctions.id],
+        },
+        name: {
+          id: 'name',
+          name: 'Name',
+          byDifficulty: false,
+          sortOrder: 1,
+          sortFunctions: [this.sortFunctions.name],
+        },
+        releaseTime: {
+          id: 'releaseTime',
+          name: 'Release time',
+          byDifficulty: false,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.releaseTime, this.sortFunctions.default],
+        },
+        level: {
+          id: 'level',
+          name: 'Level',
+          byDifficulty: true,
+          sortOrder: 1,
+          sortFunctions: [this.sortFunctions.level, this.sortFunctions.default],
+        },
+        rank: {
+          id: 'rank',
+          name: 'Rank',
+          byDifficulty: true,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.rank, this.sortFunctions.level, this.sortFunctions.default],
+        },
+        notes: {
+          id: 'notes',
+          name: 'Notes',
+          byDifficulty: true,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.notes, this.sortFunctions.level, this.sortFunctions.default],
+        },
+        bpm: {
+          id: 'bpm',
+          name: 'BPM (TODO)',
+          byDifficulty: false,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.default],
+        }
+      };
     },
     sortFunctions() {
       return {
@@ -270,11 +351,30 @@ export default {
           'full_combo': 'F',
           'clear': 'C',
         }[result.playResult])).reduce((x, y) => x > y ? x : y, ''),
+        notes: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].noteCount,
       };
     },
+    userMusics() {
+      let userMusics = this.profile.userMusics.slice();
+      let userMusicIDs = new Set(userMusics.map(userMusic => userMusic.musicId));
+      for (let music of Object.values(this.$db.musics)) {
+        if (!userMusicIDs.has(music.id)) {
+          userMusics.push({
+            musicId: music.id,
+            userMusicDifficultyStatuses: ['easy', 'normal', 'hard', 'expert', 'master'].map(musicDifficulty => ({
+              musicId: music.id,
+              musicDifficulty: musicDifficulty,
+              musicDifficultyStatus: 'forbidden',
+              userMusicResults: [],
+            })),
+          });
+        }
+      }
+      return userMusics;
+    },
     sortedMusics() {
-      let sortFunctions = this.sortItems.find(item => item.sort == this.sort).sortFunctions;
-      return this.profile.userMusics.slice().sort((a, b) => {
+      let sortFunctions = this.sorts[this.sortID].sortFunctions;
+      return this.userMusics.slice().sort((a, b) => {
         for (let f of sortFunctions) {
           let fa = f(a);
           let fb = f(b);
@@ -432,15 +532,24 @@ export default {
       window.addEventListener('resize', () => this.chart.resize());
     },
 
+    sortByID(sortID) {
+      if (this.sortID == sortID) {
+        this.sortOrder = -this.sortOrder;
+      } else {
+        this.sortID = sortID;
+        this.sortOrder = this.sorts[sortID].sortOrder;
+      }
+    },
+
     sortByDifficulty(difficulty) {
-      if (this.sort == 'Level' || this.sort == 'Rank') {
+      if (this.sorts[this.sortID].byDifficulty) {
         if (this.sortDifficulty == difficulty) {
           this.sortOrder = - this.sortOrder;
         } else {
           this.sortDifficulty = difficulty;
         }
       } else {
-        this.sort = 'Level';
+        this.sortID = 'level';
         this.sortOrder = 1;
         this.sortDifficulty = difficulty;
       }
@@ -454,6 +563,7 @@ export default {
         'font-weight': 550,
       };
     },
+
     rankStyle(rank) {
       return {
         'border': `1px solid ${rank == 'P' ? '#FFFFFF' : rank == 'F' ? '#F06292' : '#FFB74D'}`,

@@ -16,13 +16,15 @@
     v-expand-transition
       div(v-show="show")
         v-tabs(v-model="tab", fixed-tabs)
-          v-tab character
-          v-tab achievement
-          v-tab event
+          v-tab: v-icon mdi-heart
+          v-tab: v-icon mdi-crown
+          v-tab: v-icon mdi-calendar-text
+          v-tab: v-icon mdi-heart-multiple
         v-tabs-items(v-model="tab")
           v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'character')")
           v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'achievement')")
           v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'event')")
+          v-tab-item TODO
 
 </template>
 
