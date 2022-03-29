@@ -19,7 +19,7 @@
       .py-2
 
     .d-none.d-md-flex.d-lg-none
-      div(style="width: calc((100% - 1px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
+      .split(style="width: calc((100% - 1px) / 2)")
         .py-2
         Followings(:followings="followings")
         .py-2
@@ -30,7 +30,7 @@
       
       v-divider(vertical)
 
-      div(style="width: calc((100% - 1px) / 2); height: calc(100vh - 64px); overflow-y: scroll")
+      .split(style="width: calc((100% - 1px) / 2)")
         .py-2
         v-tabs(v-model="tab2", fixed-tabs)
           v-tab Tops
@@ -41,7 +41,7 @@
         .py-2
 
     .d-none.d-lg-flex
-      div(style="width: calc((100% - 2px) / 3); height: calc(100vh - 64px); overflow-y: scroll")
+      .split(style="width: calc((100% - 2px) / 3)")
         .py-2
         Followings(:followings="followings")
         .py-2
@@ -52,7 +52,7 @@
       
       v-divider(vertical)
 
-      div(style="width: calc((100% - 2px) / 3); height: calc(100vh - 64px); overflow-y: scroll")
+      .split(style="width: calc((100% - 2px) / 3)")
         .py-2
         v-list-item(dense)
           v-list-item-title Tops 
@@ -61,7 +61,7 @@
 
       v-divider(vertical)
 
-      div(style="width: calc((100% - 2px) / 3); height: calc(100vh - 64px); overflow-y: scroll")
+      .split(style="width: calc((100% - 2px) / 3)")
         .py-2
         v-list-item(dense)
           v-list-item-title Rankings 

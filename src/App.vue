@@ -79,6 +79,12 @@ export default {
 .theme--dark.v-tabs-items {
   background-color: transparent !important;
 }
-</style>
-
+.split {
+  max-height: calc(100vh - 64px);
+  overflow-y: scroll;
+}
+.split::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
 </style>
