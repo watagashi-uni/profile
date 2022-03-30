@@ -8,14 +8,17 @@
           v-img(:src="`${$sekai.assetHost}/../ondemand/event/${event.assetbundleName}/logo/logo/logo.png`")
         v-list-item-content
           v-list-item-title {{event.name}}
-          v-list-item-subtitle {{new Date(event.startAt).toLocaleDateString()}}
+          v-list-item-subtitle
+            | {{new Date(event.startAt).toLocaleDateString()}}
+            | ~
+            | {{new Date(event.aggregateAt).toLocaleDateString()}}
         v-list-item-action(v-if="rankings[event.id] === null")
           v-list-item-action-text ...
-        v-list-item-action(v-else-if="rankings[event.id].length == 0")
+        v-list-item-action(v-else-if="!rankings[event.id].score")
           v-list-item-action-text 0 P
         v-list-item-action(v-else)
-          v-list-item-title.align-self-end # {{rankings[event.id][0].rank}}
-          v-list-item-action-text {{rankings[event.id][0].score}} P
+          v-list-item-title.align-self-end # {{rankings[event.id].rank}}
+          v-list-item-action-text {{rankings[event.id].score}} P
     Divider
 </template>
 

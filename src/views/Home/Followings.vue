@@ -24,7 +24,7 @@
             v-icon mdi-delete
             v-list-item-title Delete
         input(ref="import-file", style="display: none", type="file", accept=".json", @change="onImport")
-    Rankings(:rankings="followings", :editing="editing", ref="following-list")
+    Rankings(:rankings="followings", :editing="editing", ref="following-list", showEvent)
 </template>
 
 <script>

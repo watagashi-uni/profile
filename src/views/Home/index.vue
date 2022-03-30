@@ -5,13 +5,16 @@
       Followings(:followings="followings")
       .py-2
       v-tabs(v-model="tab1", fixed-tabs)
-        v-tab Tops
-        v-tab Rankings
+        v-tab.px-0 Rank Match<br>Tops
+        v-tab.px-0 Event<br>Tops
+        v-tab.px-0 Event<br>Lines
       v-tabs-items(v-model="tab1")
         v-tab-item
-          Rankings(:rankings="tops")
+          Rankings(:rankings="rankMatchTops", showRankMatch)
         v-tab-item
-          Rankings(:rankings="rankings")
+          Rankings(:rankings="eventTops", showEvent)
+        v-tab-item
+          Rankings(:rankings="eventRankings", showEvent)
       .py-2
       v-list-item(dense)
         v-list-item-title About
@@ -31,13 +34,18 @@
       v-divider(vertical)
 
       .split(style="width: calc((100% - 1px) / 2)")
-        .py-2
-        v-tabs(v-model="tab2", fixed-tabs)
-          v-tab Tops
-          v-tab Rankings
-        v-tabs-items(v-model="tab2")
-          v-tab-item: Rankings(:rankings="tops")
-          v-tab-item: Rankings(:rankings="rankings")
+        .py-1
+        v-tabs(v-model="tab1", fixed-tabs)
+          v-tab.px-0 Rank Match<br>Tops
+          v-tab.px-0 Event<br>Tops
+          v-tab.px-0 Event<br>Lines
+        v-tabs-items(v-model="tab1")
+          v-tab-item
+            Rankings(:rankings="rankMatchTops", showRankMatch)
+          v-tab-item
+            Rankings(:rankings="eventTops", showEvent)
+          v-tab-item
+            Rankings(:rankings="eventRankings", showEvent)
         .py-2
 
     .d-none.d-lg-flex
@@ -53,19 +61,31 @@
       v-divider(vertical)
 
       .split(style="width: calc((100% - 2px) / 3)")
-        .py-2
-        v-list-item(dense)
-          v-list-item-title Tops 
-        Rankings(:rankings="tops")
+        .py-1
+        v-tabs(v-model="tab2", fixed-tabs)
+          v-tab.px-0 Event<br>Tops
+          v-tab.px-0 Event<br>Lines
+        v-tabs-items(v-model="tab2")
+          v-tab-item
+            Rankings(:rankings="eventTops", showEvent)
+          v-tab-item
+            Rankings(:rankings="eventRankings", showEvent)
         .py-2
 
       v-divider(vertical)
 
+      //- .split(style="width: calc((100% - 2px) / 3)")
+      //-   .py-2
+      //-   v-list-item(dense)
+      //-     v-list-item-title Rankings 
+      //-   Rankings(:rankings="eventRankings", showEvent)
+      //-   .py-2    
+
       .split(style="width: calc((100% - 2px) / 3)")
         .py-2
         v-list-item(dense)
-          v-list-item-title Rankings 
-        Rankings(:rankings="rankings")
+          v-list-item-title Rank Match Tops
+        Rankings(:rankings="rankMatchTops", showRankMatch)
         .py-2    
 
 </template>
@@ -93,9 +113,11 @@ export default {
         1000000, 2000000, 5000000,
       ],
 
-      tops: null,
-      rankings: [],
+      eventTops: null,
+      eventRankings: [],
       followings: [],
+
+      rankMatchTops: null,
 
       tab1: 0,
       tab2: 0,
@@ -103,8 +125,16 @@ export default {
   },
 
   computed: {
-    eventId() {
+    eventID() {
       return Object.values(this.$db.events).reduce((a, b) => {
+        if (a.startAt > new Date()) return b;
+        if (b.startAt > new Date()) return a;
+        if (a.startAt > b.startAt) return a;
+        return b;
+      }).id;
+    },
+    rankMatchSeasonID() {
+      return Object.values(this.$db.rankMatchSeasons).reduce((a, b) => {
         if (a.startAt > new Date()) return b;
         if (b.startAt > new Date()) return a;
         if (a.startAt > b.startAt) return a;
@@ -115,21 +145,26 @@ export default {
 
   methods: {
     load() {
-      this.tops = null;
-      this.rankings = [];
+      this.eventTops = null;
+      this.eventRankings = [];
       this.followings = [];
+      this.rankMatchTops = null;
 
-      sekai.api(`/api/user/{user_id}/event/${this.eventId}/ranking?targetRank=1&lowerLimit=99`).then(response => {
-        this.tops = response.rankings;
+      sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetRank=1&lowerLimit=99`).then(response => {
+        this.eventTops = response.rankings;
       });
       this.ranks.forEach(rank => {
-        sekai.api(`/api/user/{user_id}/event/${this.eventId}/ranking?targetRank=${rank}`).then(response => {
+        sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetRank=${rank}`).then(response => {
           let ranking = response.rankings[0];
           if (ranking) {
-            this.rankings.push(ranking);
-            this.rankings.sort((a, b) => a.rank - b.rank);
+            this.eventRankings.push(ranking);
+            this.eventRankings.sort((a, b) => a.rank - b.rank);
           }
         });
+      });
+
+      sekai.api(`/api/user/{user_id}/rank-match-season/${this.rankMatchSeasonID}/ranking?targetRank=1&lowerLimit=99`).then(response => {
+        this.rankMatchTops = response.rankings;
       });
 
       let sort = () => {
@@ -157,12 +192,15 @@ export default {
             user.score = 0;
           }
           this.followings.push(user);
-          sekai.api(`/api/user/{user_id}/event/${this.eventId}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
+          sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
             let ranking = response.rankings[0];
             if (ranking) {
               if (ranking.userId == user.userProfile.userId) {
                 Object.keys(ranking).forEach(key => user[key] = ranking[key]);
                 set(user.userProfile.userId, user);
+              } else {
+                user.rank = ranking.rank;
+                user.score = ranking.score;
               }
             } else {
               user.rank = 0;

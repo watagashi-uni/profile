@@ -136,6 +136,11 @@ const sekai = new Game({
         return musicDifficulties;
       }
     },
+    { name: 'rankMatchSeasons', key: 'id' },
+    { name: 'rankMatchClasses', key: 'id' },
+    { name: 'rankMatchGrades', key: 'id' },
+    { name: 'rankMatchTiers', key: 'id' },
+
     // { name: 'unitProfiles', key: 'unit' },
     // { name: 'gachas', key: 'id' },
     // { name: 'materials', key: 'id' },
