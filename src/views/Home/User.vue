@@ -27,17 +27,16 @@
             v-list-item-action-text ...
           v-list-item-action.ml-2(v-else)
             v-list-item-title.align-self-end
-              | {{$db.rankMatchGrades[$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].rankMatchGradeId].name}}
-              | -
-              | {{$db.rankMatchClasses[$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].rankMatchClassId].name}}
-              | -
-              | {{user.userRankMatchSeason.tierPoint}}/{{$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].point}}
+              | # {{user.rank}}
+              | |
+              | {{$db.rankMatchGrades[$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].rankMatchGradeId].name}}・{{$db.rankMatchClasses[$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].rankMatchClassId].name}}
+              | ({{user.userRankMatchSeason.tierPoint}}{{$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].point&&'/'}}{{$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].point}})
             v-list-item-action-text
               | Win {{user.userRankMatchSeason.winCount}}
               | |
               | Draw {{user.userRankMatchSeason.drawCount}}
               | |
-              | Lose {{user.userRankMatchSeason.loseCount}}
+              | Lose {{user.userRankMatchSeason.loseCount-user.userRankMatchSeason.penaltyCount}}+{{user.userRankMatchSeason.penaltyCount}}
 
 </template>
 
