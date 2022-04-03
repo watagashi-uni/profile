@@ -29,7 +29,7 @@
             | # {{rankings[rankMatch.id].rank}}
             | |
             | {{$db.rankMatchGrades[$db.rankMatchTiers[rankings[rankMatch.id].userRankMatchSeason.rankMatchTierId].rankMatchGradeId].name}}・{{$db.rankMatchClasses[$db.rankMatchTiers[rankings[rankMatch.id].userRankMatchSeason.rankMatchTierId].rankMatchClassId].name}}
-            | ({{rankings[rankMatch.id].userRankMatchSeason.tierPoint}}/{{$db.rankMatchTiers[rankings[rankMatch.id].userRankMatchSeason.rankMatchTierId].point}})
+            | ({{rankings[rankMatch.id].userRankMatchSeason.tierPoint}}{{$db.rankMatchTiers[rankings[rankMatch.id].userRankMatchSeason.rankMatchTierId].point&&'/'}}{{$db.rankMatchTiers[rankings[rankMatch.id].userRankMatchSeason.rankMatchTierId].point}})
           v-list-item-action-text
             | Win {{rankings[rankMatch.id].userRankMatchSeason.winCount}}
             | |
