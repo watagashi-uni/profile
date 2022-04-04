@@ -69,7 +69,7 @@ function Game(object) {
 
     this.databaseStatus.loaded = 0;
     await axios.all(this.requiredDatabases.map((requiredDatabase) =>
-      axios.get(`${this.databaseHost}/${requiredDatabase.uri || requiredDatabase.name}.json?t=${new Date().getTime()}`).then((data) => {
+      axios.get(`${requiredDatabase.host || this.databaseHost}/${requiredDatabase.uri || requiredDatabase.name}.json?t=${new Date().getTime()}`).then((data) => {
         this.databaseStatus.loaded += 1;
         // window.vue.$emit('databaseLoading', {
         //   gameID: this.id,
@@ -123,9 +123,9 @@ const sekai = new Game({
     { name: 'events', key: 'id' },
     { name: 'honors', key: 'id' },
     { name: 'honorGroups', key: 'id' },
-    { name: 'musics', key: 'id' },
+    { name: 'musics', key: 'id', host: 'https://musics.pjsekai.moe' },
     {
-      name: 'musicDifficulties', function: function (data) {
+      name: 'musicDifficulties', host: 'https://musics.pjsekai.moe', function: function (data) {
         let musicDifficulties = {};
         for (let musicDifficulty of data) {
           if (!musicDifficulties[musicDifficulty.musicId]) {

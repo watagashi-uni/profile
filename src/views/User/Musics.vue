@@ -159,6 +159,102 @@
                 .pr-2(v-if="i")
                 MusicDifficultyStatus(:key="`musics-difficulties-${status.musicDifficulty}`", :status="status", style="width: calc(20% - 3.2px)")
 
+        //- v-expand-transition
+        //-   div(v-show="detailID == music.musicId || sortID == 'level'")
+        //-     v-list-item
+        //-       .mr-4
+        //-         v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+        //-           .cell.my-auto Level<br>Adjust
+        //-       v-list-item-content
+        //-         v-list-item-subtitle.d-flex
+        //-           template(v-for="status, i in music.userMusicDifficultyStatuses")
+        //-             .pr-2(v-if="i")
+        //-             .cell.score(style="width: calc(20% - 3.2px)")
+        //-               template(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust")
+        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
+        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust.toFixed(1).startsWith('-') ? '' : '+'}}
+        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust.toFixed(1)}}
+        //-               template(v-else)
+        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}?
+
+        v-expand-transition
+          div(v-show="detailID == music.musicId || sortID == 'hot'")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto Hot
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  .cell.score
+                    template(v-if="$db.musics[music.musicId].hotAdjust")
+                      template(v-if="$db.musics[music.musicId].hotAdjust>=2.0")
+                        v-icon(color="red") mdi-fire
+                        v-icon(color="red") mdi-fire
+                        v-icon(color="red") mdi-fire
+                      template(v-else-if="$db.musics[music.musicId].hotAdjust>=1.0")
+                        v-icon(color="red") mdi-fire
+                        v-icon(color="red") mdi-fire
+                      template(v-else-if="$db.musics[music.musicId].hotAdjust>=0.5")
+                        v-icon(color="red") mdi-fire
+                      template(v-else-if="$db.musics[music.musicId].hotAdjust>=0.0")
+                        v-icon mdi-signal-cellular-3
+                      template(v-else-if="$db.musics[music.musicId].hotAdjust>=-1.0")
+                        v-icon mdi-signal-cellular-2
+                      template(v-else-if="$db.musics[music.musicId].hotAdjust>=-2.0")
+                        v-icon mdi-signal-cellular-1
+                      template(v-else)
+                        v-icon mdi-signal-cellular-outline
+                    template(v-else)
+                      v-icon mdi-new-box
+
+        v-expand-transition
+          div(v-show="detailID == music.musicId || sortID == 'f'")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto F %
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      template(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].fullComboRate")
+                        span {{($db.musicDifficulties[status.musicId][status.musicDifficulty].fullComboRate*100).toFixed(1)}}%
+                      template(v-else)
+                        span N/A
+
+        v-expand-transition
+          div(v-show="detailID == music.musicId || sortID == 'p'")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto P %
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      template(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].fullPerfectRate")
+                        span {{($db.musicDifficulties[status.musicId][status.musicDifficulty].fullPerfectRate*100).toFixed(1)}}%
+                      template(v-else)
+                        span N/A
+
+        //- v-expand-transition
+        //-   div(v-show="detailID == music.musicId")
+        //-     v-list-item
+        //-       .mr-4
+        //-         v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+        //-           .cell.my-auto Based
+        //-       v-list-item-content
+        //-         v-list-item-subtitle.d-flex
+        //-           template(v-for="status, i in music.userMusicDifficultyStatuses")
+        //-             .pr-2(v-if="i")
+        //-             .cell.score(style="width: calc(20% - 3.2px)")
+        //-               template(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].count")
+        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].count.toFixed(0)}}
+        //-               template(v-else)
+        //-                 span 0
+
         v-expand-transition
           div(v-show="detailID == music.musicId")
             v-list-item
@@ -172,12 +268,29 @@
                     .cell.score(style="width: calc(20% - 3.2px)")
                       | {{$db.musicDifficulties[status.musicId][status.musicDifficulty].noteCount}}
 
+        v-expand-transition
+          div(v-show="detailID == music.musicId")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto View
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      meta()
+                      v-btn(small, icon, :href="`https://sekai-assets-1258184166.file.myqcloud.com/music/charts/${('0000'+music.musicId).slice(-4)}/${status.musicDifficulty}.svg`", target="_blank", rel="noopener noreferrer")
+                        v-icon mdi-open-in-new
+
+        v-expand-transition
+          div(v-show="detailID == music.musicId")
             Divider(inset=72)
 
             v-list-item
               .mr-4
                 v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                  .cell.my-auto Score
+                  .cell.my-auto Record
               v-list-item-content
                 v-list-item-subtitle.d-flex
                   template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -309,12 +422,33 @@ export default {
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.releaseTime, this.sortFunctions.default],
         },
+        hot: {
+          id: 'hot',
+          name: 'Hot',
+          byDifficulty: false,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.hot, this.sortFunctions.default],
+        },
         level: {
           id: 'level',
           name: 'Level',
           byDifficulty: true,
           sortOrder: 1,
-          sortFunctions: [this.sortFunctions.level, this.sortFunctions.default],
+          sortFunctions: [this.sortFunctions.level, this.sortFunctions.levelAdjust],
+        },
+        f: {
+          id: 'f',
+          name: 'F %',
+          byDifficulty: true,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.f],
+        },
+        p: {
+          id: 'p',
+          name: 'P %',
+          byDifficulty: true,
+          sortOrder: -1,
+          sortFunctions: [this.sortFunctions.p],
         },
         rank: {
           id: 'rank',
@@ -345,7 +479,11 @@ export default {
         id: music => music.musicId,
         name: music => this.$db.musics[music.musicId].title.toLowerCase(),
         releaseTime: music => this.$db.musics[music.musicId].publishedAt,
+        hot: music => this.$db.musics[music.musicId].hotAdjust || 0,
         level: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevel,
+        levelAdjust: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevelAdjust || 0,
+        f: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].fullComboRate || 0,
+        p: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].fullPerfectRate || 0,
         rank: music => music.userMusicDifficultyStatuses.find(status => status.musicDifficulty == this.sortDifficulty).userMusicResults.map(result => ({
           'full_perfect': 'P',
           'full_combo': 'F',
