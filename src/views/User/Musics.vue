@@ -32,7 +32,7 @@
               template(v-for="score, difficulty, i in difficulties")
                 .pr-2(v-if="i")
                 div(style="width: calc(20% - 3.2px)")
-                  .score {{score}}
+                  .cell {{score}}
 
       Divider(inset=72)
 
@@ -41,7 +41,7 @@
           v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
             .rank.my-auto All
         v-list-item-subtitle
-          .score {{Object.values($db.musics).length}}
+          .cell {{Object.values($db.musics).length}}
       
       Divider
 
@@ -159,23 +159,21 @@
                 .pr-2(v-if="i")
                 MusicDifficultyStatus(:key="`musics-difficulties-${status.musicDifficulty}`", :status="status", style="width: calc(20% - 3.2px)")
 
-        //- v-expand-transition
-        //-   div(v-show="detailID == music.musicId || sortID == 'level'")
-        //-     v-list-item
-        //-       .mr-4
-        //-         v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-        //-           .cell.my-auto Level<br>Adjust
-        //-       v-list-item-content
-        //-         v-list-item-subtitle.d-flex
-        //-           template(v-for="status, i in music.userMusicDifficultyStatuses")
-        //-             .pr-2(v-if="i")
-        //-             .cell.score(style="width: calc(20% - 3.2px)")
-        //-               template(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust")
-        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
-        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust.toFixed(1).startsWith('-') ? '' : '+'}}
-        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust.toFixed(1)}}
-        //-               template(v-else)
-        //-                 span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}?
+        v-expand-transition
+          div(v-show="sortID == 'levelAdjust'")
+            v-list-item
+              .mr-4
+                v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
+                  .cell.my-auto Level<br>adjust
+              v-list-item-content
+                v-list-item-subtitle.d-flex
+                  template(v-for="status, i in music.userMusicDifficultyStatuses")
+                    .pr-2(v-if="i")
+                    .cell.score(style="width: calc(20% - 3.2px)")
+                      template(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust")
+                        span {{($db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel+$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust).toFixed(1)}}
+                      template(v-else)
+                        span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}?
 
         v-expand-transition
           div(v-show="detailID == music.musicId || sortID == 'hot'")
@@ -436,6 +434,13 @@ export default {
           sortOrder: 1,
           sortFunctions: [this.sortFunctions.level, this.sortFunctions.levelAdjust],
         },
+        levelAdjust: {
+          id: 'levelAdjust',
+          name: 'Level adjust',
+          byDifficulty: true,
+          sortOrder: 1,
+          sortFunctions: [this.sortFunctions.levelAdjust],
+        },
         f: {
           id: 'f',
           name: 'F %',
@@ -481,7 +486,7 @@ export default {
         releaseTime: music => this.$db.musics[music.musicId].publishedAt,
         hot: music => this.$db.musics[music.musicId].hotAdjust || 0,
         level: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevel,
-        levelAdjust: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevelAdjust || 0,
+        levelAdjust: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevel + (this.$db.musicDifficulties[music.musicId][this.sortDifficulty].playLevelAdjust || 0),
         f: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].fullComboRate || 0,
         p: music => this.$db.musicDifficulties[music.musicId][this.sortDifficulty].fullPerfectRate || 0,
         rank: music => music.userMusicDifficultyStatuses.find(status => status.musicDifficulty == this.sortDifficulty).userMusicResults.map(result => ({

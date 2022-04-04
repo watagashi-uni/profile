@@ -7,19 +7,10 @@
     .d-flex
       .difficulty(:style="style.difficulty")
         span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
-        template(v-if="status.musicDifficulty == 'easy' || status.musicDifficulty == 'normal'")
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 1") +
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -1") -
-        template(v-else-if="status.musicDifficulty == 'hard'")
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 2") +
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 0.75") +
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -0.75") -
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -2") -
-        template(v-else)
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 2") +
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 0.5") +
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -0.5") -
-          sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -2") -
+        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 1.50") +
+        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 0.50") +
+        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -0.50") -
+        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -1.50") -
       .rank(:style="style.rank")
         v-icon(v-if="status.musicDifficultyStatus != 'available'", x-small, color="#FFFFFF99") mdi-lock
         span(v-else-if="status.userMusicResults.length == 0") 
