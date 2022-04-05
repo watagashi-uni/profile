@@ -202,6 +202,7 @@
                         v-icon mdi-signal-cellular-1
                       template(v-else)
                         v-icon mdi-signal-cellular-outline
+                      span.px-2 {{$db.musics[music.musicId].hot.toFixed(0)}}
                     template(v-else)
                       v-icon mdi-new-box
 
