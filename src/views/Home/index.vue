@@ -1,8 +1,8 @@
 <template lang="pug">
   div
-    .d-block.d-md-none
+    .d-block(v-if="$vuetify.breakpoint.smAndDown")
       .py-2
-      Followings(:followings="followings")
+      Followings(:followings="followings", key="followings")
       .py-2
       v-tabs(v-model="tab1", fixed-tabs)
         v-tab.px-0 Rank Match<br>Tops
@@ -10,21 +10,21 @@
         v-tab.px-0 Event<br>Lines
       v-tabs-items(v-model="tab1")
         v-tab-item
-          Rankings(:rankings="rankMatchTops", showRankMatch)
+          Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
         v-tab-item
-          Rankings(:rankings="eventTops", showEvent)
+          Rankings(:rankings="eventTops", showEvent, key="event-tops")
         v-tab-item
-          Rankings(:rankings="eventRankings", showEvent)
+          Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
       .py-2
       v-list-item(dense)
         v-list-item-title About
       About
       .py-2
 
-    .d-none.d-md-flex.d-lg-none
+    .d-flex(v-if="$vuetify.breakpoint.md")
       .split(style="width: calc((100% - 1px) / 2)")
         .py-2
-        Followings(:followings="followings")
+        Followings(:followings="followings", key="followings")
         .py-2
         v-list-item(dense)
           v-list-item-title About
@@ -41,17 +41,17 @@
           v-tab.px-0 Event<br>Lines
         v-tabs-items(v-model="tab1")
           v-tab-item
-            Rankings(:rankings="rankMatchTops", showRankMatch)
+            Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
           v-tab-item
-            Rankings(:rankings="eventTops", showEvent)
+            Rankings(:rankings="eventTops", showEvent, key="event-tops")
           v-tab-item
-            Rankings(:rankings="eventRankings", showEvent)
+            Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
         .py-2
 
-    .d-none.d-lg-flex
+    .d-flex(v-if="$vuetify.breakpoint.lgAndUp")
       .split(style="width: calc((100% - 2px) / 3)")
         .py-2
-        Followings(:followings="followings")
+        Followings(:followings="followings", key="followings")
         .py-2
         v-list-item(dense)
           v-list-item-title About
@@ -67,9 +67,9 @@
           v-tab.px-0 Event<br>Lines
         v-tabs-items(v-model="tab2")
           v-tab-item
-            Rankings(:rankings="eventTops", showEvent)
+            Rankings(:rankings="eventTops", showEvent, key="event-tops")
           v-tab-item
-            Rankings(:rankings="eventRankings", showEvent)
+            Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
         .py-2
 
       v-divider(vertical)
@@ -78,14 +78,14 @@
       //-   .py-2
       //-   v-list-item(dense)
       //-     v-list-item-title Rankings 
-      //-   Rankings(:rankings="eventRankings", showEvent)
+      //-   Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
       //-   .py-2    
 
       .split(style="width: calc((100% - 2px) / 3)")
         .py-2
         v-list-item(dense)
           v-list-item-title Rank Match Tops
-        Rankings(:rankings="rankMatchTops", showRankMatch)
+        Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
         .py-2    
 
 </template>
