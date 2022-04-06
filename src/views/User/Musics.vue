@@ -114,20 +114,28 @@
               Divider
               template(v-for="sort, i in Object.values(sorts).filter(sort => !sort.byDifficulty)")
                 Divider(inset=48, v-if="i")
-                v-list-item(:key="`sort-${sort.id}`", @click="sortByID(sort.id)")
-                  v-icon.pr-2 mdi-menu-{{(sortID == sort.id ? -sortOrder : sort.sortOrder) > 0 ? 'up' : 'down'}}
-                  v-list-item-title {{sort.name}}
+                v-tooltip(left, :disabled="!sort.hint")
+                  template(v-slot:activator="{on, attrs}")
+                    v-list-item(:key="`sort-${sort.id}`", @click="sortByID(sort.id)", v-bind="attrs", v-on="on")
+                      v-icon.pr-2 mdi-menu-{{(sortID == sort.id ? -sortOrder : sort.sortOrder) > 0 ? 'up' : 'down'}}
+                      v-list-item-title {{sort.name}}
+                  span(v-html="sort.hint")
               Divider
+
             v-divider(vertical)
+
             v-list.py-0(dense)
               v-list-item
                 v-list-item-subtitle Sort by score
               Divider
               template(v-for="sort, i in Object.values(sorts).filter(sort => sort.byDifficulty)")
                 Divider(inset=48, v-if="i")
-                v-list-item(:key="`sort-${sort.id}`", @click="sortByID(sort.id)")
-                  v-icon.pr-2 mdi-menu-{{(sortID == sort.id ? -sortOrder : sort.sortOrder) > 0 ? 'up' : 'down'}}
-                  v-list-item-title {{sort.name}}
+                v-tooltip(right, :disabled="!sort.hint")
+                  template(v-slot:activator="{on, attrs}")
+                    v-list-item(:key="`sort-${sort.id}`", @click="sortByID(sort.id)", v-bind="attrs", v-on="on")
+                      v-icon.pr-2 mdi-menu-{{(sortID == sort.id ? -sortOrder : sort.sortOrder) > 0 ? 'up' : 'down'}}
+                      v-list-item-title {{sort.name}}
+                  span(v-html="sort.hint")
               Divider
 
         div(style="width: 100%")
@@ -438,6 +446,7 @@ export default {
         levelAdjust: {
           id: 'levelAdjust',
           name: 'Level adjust',
+          hint: 'Estimated based on F % and P %. Influences <br>of play count and release time are reduced. <br>+ / - : 0.5 ~ 1.5 level bias. <br>++ / -- : > 1.5 level bias. <br>Data updated per event. ',
           byDifficulty: true,
           sortOrder: 1,
           sortFunctions: [this.sortFunctions.levelAdjust],
@@ -445,6 +454,7 @@ export default {
         f: {
           id: 'f',
           name: 'F %',
+          hint: 'F % = Full Combo count / Clear count. <br>Data updated per event. ',
           byDifficulty: true,
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.f],
@@ -452,6 +462,7 @@ export default {
         p: {
           id: 'p',
           name: 'P %',
+          hint: 'P % = All Perfect count / Clear count. <br>Data updated per event. ',
           byDifficulty: true,
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.p],
