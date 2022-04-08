@@ -3,22 +3,23 @@
     Divider
     template(v-for="event, i in Object.values($db.events).filter(event => event.id >= this.$sekai.eventStartID).reverse()")
       Divider(inset=112, v-if="i")
-      v-list-item(:key="`events-${event.id}`")
-        .my-2.mr-4(style="height: 40px; width: 80px")
-          v-img(:src="`${$sekai.assetHost}/../ondemand/event/${event.assetbundleName}/logo/logo/logo.png`")
-        v-list-item-content
-          v-list-item-title {{event.name}}
-          v-list-item-subtitle
-            | {{new Date(event.startAt).toLocaleDateString()}}
-            | ~
-            | {{new Date(event.aggregateAt).toLocaleDateString()}}
-        v-list-item-action(v-if="rankings[event.id] === null")
-          v-list-item-action-text ...
-        v-list-item-action(v-else-if="!rankings[event.id].score")
-          v-list-item-action-text 0 P
-        v-list-item-action(v-else)
-          v-list-item-title.align-self-end # {{rankings[event.id].rank}}
-          v-list-item-action-text {{rankings[event.id].score}} P
+      v-lazy(height=56)
+        v-list-item(:key="`events-${event.id}`")
+          .my-2.mr-4(style="height: 40px; width: 80px")
+            v-img(:src="`${$sekai.assetHost}/../ondemand/event/${event.assetbundleName}/logo/logo/logo.png`")
+          v-list-item-content
+            v-list-item-title {{event.name}}
+            v-list-item-subtitle
+              | {{new Date(event.startAt).toLocaleDateString()}}
+              | ~
+              | {{new Date(event.aggregateAt).toLocaleDateString()}}
+          v-list-item-action(v-if="rankings[event.id] === null")
+            v-list-item-action-text ...
+          v-list-item-action(v-else-if="!rankings[event.id].score")
+            v-list-item-action-text 0 P
+          v-list-item-action(v-else)
+            v-list-item-title.align-self-end # {{rankings[event.id].rank}}
+            v-list-item-action-text {{rankings[event.id].score}} P
     Divider
 </template>
 

@@ -24,7 +24,12 @@
           v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'character')")
           v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'achievement')")
           v-tab-item: HonorList(:honors="honors.filter(honor => $db.honorGroups[honor.groupId].honorType == 'event')")
-          v-tab-item TODO
+          v-tab-item
+            Divider
+            v-list.py-0(dense)
+              v-list-item
+                v-list-item-subtitle TODO
+            Divider
 
 </template>
 

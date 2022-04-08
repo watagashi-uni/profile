@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  v-lazy(height=56): div
     //- p {{JSON.stringify(user)}}
     v-list-item(dense, v-bind="{to: editing ? undefined : `/user/${user.userId || (user.userProfile && user.userProfile.userId)}`}")
       template(v-slot:default="{active}")
