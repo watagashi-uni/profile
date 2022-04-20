@@ -229,7 +229,7 @@
                       .pr-2(v-if="i")
                       .cell.score(style="width: calc(20% - 3.2px)")
                         meta()
-                        v-btn(small, icon, :href="`https://sekai-assets-1258184166.file.myqcloud.com/music/charts/${('0000'+music.musicId).slice(-4)}/${status.musicDifficulty}.svg`", target="_blank", rel="noopener noreferrer")
+                        v-btn(small, icon, :href="`https://sekai-music-charts-1258184166.file.myqcloud.com/${('0000'+music.musicId).slice(-4)}/${status.musicDifficulty}.svg`", target="_blank", rel="noopener noreferrer")
                           v-icon mdi-open-in-new
 
           v-expand-transition
