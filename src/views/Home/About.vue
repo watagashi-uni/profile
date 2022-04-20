@@ -1,7 +1,7 @@
 <template lang="pug">
   div
+    Divider
     v-list.py-0(dense)
-      Divider
       User(:user="user")
       Divider(inset=16)
       v-list-item
@@ -13,22 +13,38 @@
         v-list-item-action.ma-0
           v-btn(icon, href="https://twitter.com/nilcric_pjsekai", target="_blank")
             v-icon mdi-twitter
+    Divider
+    
+    .py-2
+    v-list-item(dense)
+      v-list-item-title Links
+    Divider
+    v-list.py-0(dense)
+      v-list-item(href="https://sekai.best", target="_blank")
+        v-list-item-title Sekai Viewer
+      Divider(inset=16)
+      v-list-item(href="https://pjsek.ai", target="_blank")
+        v-list-item-title pjsek.ai
       Divider(inset=16)
       v-list-item(href="https://shop.pjsekai.moe", target="_blank")
-        v-list-item-content
-          v-list-item-title.purple--text.text--lighten-2 Project Sekai Account Shop
-          v-list-item-subtitle 
-      Divider
+        v-list-item-title Project Sekai Account Shop
+    Divider
     
     .py-2
 
     v-list.py-0(dense)
       Divider
       v-list-item(@click="reloadDatabase")
-        v-list-item-content
-          v-list-item-title.purple--text.text--lighten-2 Reload database
-          v-list-item-subtitle 
+        v-list-item-title.purple--text.text--lighten-2 Reload database
       Divider
+    
+    .py-2
+    v-list-item(dense)
+      v-list-item-subtitle.text-wrap 
+        | This site (<a href="https://profile.pjsekai.moe">Project Sekai Profile</a>)
+        | does not collect, upload, or share any personal information. 
+        | The Following list is stored only in your local browser. 
+
 </template>
 
 <script>
