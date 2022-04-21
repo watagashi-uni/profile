@@ -15,7 +15,7 @@
         v-tab(style="min-width: 40px"): v-icon mdi-podium-gold
         v-tab(style="min-width: 40px"): v-icon mdi-tag
         v-tab(style="min-width: 40px"): v-icon mdi-heart
-      v-tabs-items(v-model="tab1")
+      v-tabs-items(touchless, v-model="tab1")
         v-tab-item: Musics(:profile="profile", key="user-musics")
         v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
         v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
@@ -33,7 +33,7 @@
           v-tab: v-icon mdi-podium-gold
           v-tab: v-icon mdi-tag
           v-tab: v-icon mdi-heart
-        v-tabs-items(v-model="tab2")
+        v-tabs-items(touchless, v-model="tab2")
           v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
           v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")
@@ -76,7 +76,7 @@
           v-tab: v-icon mdi-calendar-text
           v-tab: v-icon mdi-podium-gold
           v-tab: v-icon mdi-tag
-        v-tabs-items(v-model="tab3")
+        v-tabs-items(touchless, v-model="tab3")
           v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
           v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")

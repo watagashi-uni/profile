@@ -8,7 +8,7 @@
         v-tab.px-0 Rank Match<br>Tops
         v-tab.px-0 Event<br>Tops
         v-tab.px-0 Event<br>Lines
-      v-tabs-items(v-model="tab1")
+      v-tabs-items(touchless, v-model="tab1")
         v-tab-item
           Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
         v-tab-item
@@ -39,7 +39,7 @@
           v-tab.px-0 Rank Match<br>Tops
           v-tab.px-0 Event<br>Tops
           v-tab.px-0 Event<br>Lines
-        v-tabs-items(v-model="tab1")
+        v-tabs-items(touchless, v-model="tab1")
           v-tab-item
             Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
           v-tab-item
@@ -65,7 +65,7 @@
         v-tabs(v-model="tab2", fixed-tabs)
           v-tab.px-0 Event<br>Tops
           v-tab.px-0 Event<br>Lines
-        v-tabs-items(v-model="tab2")
+        v-tabs-items(touchless, v-model="tab2")
           v-tab-item
             Rankings(:rankings="eventTops", showEvent, key="event-tops")
           v-tab-item

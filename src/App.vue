@@ -73,7 +73,8 @@ export default {
 .v-btn--active.no-active::before {
   opacity: 0 !important;
 }
-.v-slide-group__prev--disabled {
+.v-slide-group__prev,
+.v-slide-group__next {
   display: none !important;
 }
 .theme--dark.v-tabs-items {

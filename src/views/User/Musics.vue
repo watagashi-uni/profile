@@ -50,9 +50,17 @@
     v-list-item(dense)
       v-list-item-title Details
 
+
     v-list.py-0(dense)
       Divider
+      .py-2
+      v-select.px-4(dense, v-model="genre", :items="genres", :menu-props="{maxHeight: 512}")
+      Divider
 
+    .py-2
+
+    v-list.py-0(dense)
+      Divider
       v-list-item
         v-menu(offset-y)
           template(v-slot:activator="{on, attrs}")
@@ -311,19 +319,9 @@ export default {
     return {
       chart: null,
       showRank: 'All',
-      showRanks: [
-        { text: 'Bars', value: 'bar' },
-        { text: 'Default', value: 'All' },
-        // { text: 'Show unlocked musics', value: 'Unlocked' },
-        // { text: 'Show cleared musics', value: 'C' },
-      ],
-      ranks: [
-        { name: 'All', color: '#333333', hint: 'All' },
-        { name: 'Unlocked', color: '#666666', hint: 'Unlocked' },
-        { name: 'C', color: '#FFB74D', hint: 'Clear' },
-        { name: 'F', color: '#F06292', hint: 'Full Combo' },
-        { name: 'P', color: '#FFFFFF', hint: 'All Perfect' },
-      ],
+
+      genre: 'all',
+
       sortID: 'default',
       sortDifficulty: 'master',
       sortOrder: 1,
@@ -333,6 +331,31 @@ export default {
   },
 
   computed: {
+    showRanks: () => [
+      { text: 'Bars', value: 'bar' },
+      { text: 'Default', value: 'All' },
+      // { text: 'Show unlocked musics', value: 'Unlocked' },
+      // { text: 'Show cleared musics', value: 'C' },
+    ],
+    ranks: () => [
+      { name: 'All', color: '#333333', hint: 'All' },
+      { name: 'Unlocked', color: '#666666', hint: 'Unlocked' },
+      { name: 'C', color: '#FFB74D', hint: 'Clear' },
+      { name: 'F', color: '#F06292', hint: 'Full Combo' },
+      { name: 'P', color: '#FFFFFF', hint: 'All Perfect' },
+    ],
+    genres() {
+      return [
+        { text: 'All', value: 'all' },
+        { text: 'バーチャル・シンガー', value: 'vocaloid' },
+        { text: 'Leo/need', value: 'light_music_club' },
+        { text: 'MORE MORE JUMP！', value: 'idol' },
+        { text: 'Vivid BAD SQUAD', value: 'street' },
+        { text: 'ワンダーランズ×ショウタイム', value: 'theme_park' },
+        { text: '25時、ナイトコードで。', value: 'school_refusal' },
+        { text: 'Others', value: 'other' },
+      ];
+    },
     difficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
     difficultyColors: () => ({
       easy: '#81C784',
@@ -471,8 +494,14 @@ export default {
       return userMusics;
     },
     sortedMusics() {
+      let musics = this.userMusics.slice();
+
+      if (this.genre != 'all') {
+        musics = musics.filter(music => this.$db.musics[music['musicId']].genre == this.genre);
+      }
+
       let sortFunctions = this.sorts[this.sortID].sortFunctions;
-      return this.userMusics.slice().sort((a, b) => {
+      musics = musics.sort((a, b) => {
         for (let f of sortFunctions) {
           let fa = f(a);
           let fb = f(b);
@@ -481,6 +510,8 @@ export default {
         }
         return 0;
       });
+
+      return musics;
     },
     summary() {
       let result = {
