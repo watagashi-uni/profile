@@ -49,7 +49,7 @@
         Musics(:profile="profile", key="user-musics")
         .py-2
     
-    .d-flex(v-if="$vuetify.breakpoint.lgAndUp")
+    .d-flex(v-if="$vuetify.breakpoint.lg")
       .split(style="width: 360px")
         .py-2
         Profile(:profile="profile", key="user-profile")
@@ -81,6 +81,40 @@
           v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")
         .py-2
+    
+    .d-flex(v-if="$vuetify.breakpoint.xl")
+      .split(style="width: 360px")
+        .py-2
+        Profile(:profile="profile", key="user-profile")
+        .py-2
+        v-list-item(dense)
+          v-list-item-title Characters
+        Characters(:profile="profile", key="user-characters")
+        .py-2
+
+      v-divider(vertical)
+
+      .split(style="width: calc(100% - 720px - 2px - (100% - 1800px) / 4)")
+        //- .py-2
+        //- v-list-item(dense)
+        //-   v-list-item-title Musics
+        Musics(:profile="profile", key="user-musics")
+        //- .py-2
+
+      v-divider(vertical)
+
+      .split(style="width: calc(360px + (100% - 1800px) / 4)")
+        .py-1
+        v-tabs(v-model="tab3", fixed-tabs)
+          v-tab: v-icon mdi-calendar-text
+          v-tab: v-icon mdi-podium-gold
+          v-tab: v-icon mdi-tag
+        v-tabs-items(touchless, v-model="tab3")
+          v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
+          v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
+          v-tab-item: Honors(:profile="profile", key="user-honors")
+        .py-2
+
 
 </template>
 

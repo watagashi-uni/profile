@@ -11,7 +11,7 @@ export default new Vuetify({
       xs: 360,
       sm: 720,
       md: 1080,
-      lg: 1440,
+      lg: 1800,
     },
     scrollBarWidth: 0,
   },
