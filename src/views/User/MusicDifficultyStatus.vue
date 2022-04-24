@@ -6,13 +6,13 @@
   div
     .d-flex
       .difficulty(:style="style.difficulty")
-        span {{$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevel}}
-        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 1.50") +
-        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust > 0.50") +
-        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -0.50") -
-        sup(v-if="$db.musicDifficulties[status.musicId][status.musicDifficulty].playLevelAdjust < -1.50") -
+        span {{musicDifficulty.playLevel}}
+        sup(v-if="musicDifficulty.playLevelAdjust > 1.50") +
+        sup(v-if="musicDifficulty.playLevelAdjust > 0.50") +
+        sup(v-if="musicDifficulty.playLevelAdjust < -0.50") -
+        sup(v-if="musicDifficulty.playLevelAdjust < -1.50") -
       .rank(:style="style.rank")
-        v-icon(v-if="status.musicDifficultyStatus != 'available'", x-small, color="#FFFFFF99") mdi-lock
+        v-icon(v-if="status.musicDifficultyStatus != 'available'", x-small, :color="style.rank.color") mdi-lock
         span(v-else-if="status.userMusicResults.length == 0") 
         span(v-else) {{rank}}
     .d-flex
@@ -26,15 +26,14 @@
 export default {
   name: 'MusicDifficultyStatus',
 
-  props: ['status', 'score'],
+  props: ['status', 'score', 'results'],
 
   computed: {
+    musicDifficulty() {
+      return this.$db.musicDifficulties[this.status.musicId][this.status.musicDifficulty];
+    },
     rank() {
-      return this.status.userMusicResults.map(result => ({
-        'full_perfect': 'P',
-        'full_combo': 'F',
-        'clear': 'C',
-      }[result.playResult])).reduce((x, y) => x > y ? x : y, '');
+      return this.status.rank;
     },
     _score() {
       return this.score;
@@ -42,6 +41,14 @@ export default {
       // since the best score may not occur together with fc or ap
       //
       // || this.status.userMusicResults.map(result => result.highScore).reduce((x, y) => x > y ? x : y, 0);
+    },
+    rating() {
+      return Math.round({
+        'P': 10.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.fullPerfectAdjust),
+        'F': 9.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.fullComboAdjust),
+        'C': 6.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.playLevelAdjust),
+        '': 0.0
+      }[this.rank] || 0);
     },
     style() {
       return {
