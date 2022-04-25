@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     .d-block(v-if="$vuetify.breakpoint.lgAndDown")
-      MusicSummaries(:userMusics="userMusics", :r="r" key="music-summaries")
+      MusicSummaries(:userMusics="userMusics", :r="r", key="music-summaries")
       .py-2
 
       v-tabs(v-model="tab", fixed-tabs)
@@ -112,6 +112,5 @@ export default {
       return this.best39.map(status => Math.round(status.r)).reduce((x, y) => x + y, 0);
     },
   }
-
 };
 </script>

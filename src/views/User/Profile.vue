@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    v-list.py-0(dense)
+    v-list.py-0.print(dense, ref="profile")
       Divider
       v-list-item
         v-list-item-avatar
@@ -22,12 +22,11 @@
       v-list-item
         v-list-item-content: v-list-item-title Registration at
         v-list-item-action: v-list-item-action-text {{new Date(1600218000000 + profile.userProfile.userId / 2 ** 22).toLocaleString()}}
-      template(v-if="profile.userProfile.twitterId")
-        Divider(inset=16)
-        v-list-item(:href="`https://twitter.com/${profile.userProfile.twitterId}`", target="_blank")
-          v-list-item-content: v-list-item-title Twitter
-          v-list-item-action: v-list-item-action-text @{{profile.userProfile.twitterId}}
-          v-list-item-action.ml-2: v-icon(small) mdi-chevron-right
+      Divider(inset=16)
+      v-list-item(:href="`https://twitter.com/${profile.userProfile.twitterId}`", target="_blank")
+        v-list-item-content: v-list-item-title Twitter
+        v-list-item-action: v-list-item-action-text @{{profile.userProfile.twitterId}}
+        v-list-item-action.ml-2: v-icon(small) mdi-chevron-right
       Divider
     .py-2
     v-list.py-0(dense)
@@ -135,6 +134,7 @@ export default {
     this.$nextTick(function () {
       this.load();
     });
+    this.$root.$emit('saveComponent', 'profile', this.$refs.profile);
   },
 
   watch: {

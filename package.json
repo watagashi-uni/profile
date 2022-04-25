@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "echarts": "^5.2.1",
     "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
     "idb-keyval": "^5.0.2",
     "json-bigint": "^1.0.0",
     "register-service-worker": "^1.7.1",

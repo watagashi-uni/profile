@@ -66,7 +66,7 @@
 
         v-list-item(:key="`musics-${music.musicId}`", @click="detailID = detailID == music.musicId ? -1 : music.musicId")
           v-list-item-avatar(tile)
-            v-img(:src="`${$sekai.assetHost}/music/jacket/${$db.musics[music.musicId].assetbundleName}/${$db.musics[music.musicId].assetbundleName}.png`")
+            v-img(:src="`${$sekai.assetHost}/thumbnail/music_jacket/${$db.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
             v-list-item-title.d-flex
               v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="detailID == music.musicId || sortID == 'id'") ID {{music.musicId}}

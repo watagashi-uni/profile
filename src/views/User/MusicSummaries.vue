@@ -8,7 +8,7 @@
     
     .py-2
 
-    v-list.py-0(dense)
+    v-list.py-0.print(dense, ref="summaryByDifficulty")
       Divider
 
       v-list-item
@@ -47,7 +47,7 @@
 
     .py-2
 
-    v-list.py-0(dense)
+    v-list.py-0.print(dense, ref="r")
       Divider
       v-list-item
         v-list-item-title R
@@ -146,6 +146,7 @@ export default {
 
       return result;
     },
+
     options() {
       let minLevel = 0, maxLevel = 0;
       for (let musicId in this.$db.musicDifficulties) {
@@ -168,11 +169,18 @@ export default {
       return {
         grid: { 'top': 48, 'bottom': 32, 'left': 32, 'right': 32 },
         xAxis: {
+          type: 'category',
           data: levels,
           axisTick: { alignWithLabel: true },
         },
         yAxis: {
+          type: 'value',
           axisLabel: { formatter: x => x.toString().replace(/^0\./, '.') },
+          splitLine: {
+            lineStyle: {
+              color: '#FFFFFF1F',
+            },
+          }
         },
         legend: {
           // orient: 'vertical',
@@ -194,7 +202,7 @@ export default {
           areaStyle: { color: rank.color },
           data: levels.map(i => this.showRank == 'bar' ?
             this.summary[rank.name][i] :
-            Math.min(1, this.summary[rank.name][i] / this.summary[this.showRank][i])
+            Math.min(1, this.summary[rank.name][i] / this.summary['All'][i])
           ),
         })),
       };
@@ -235,6 +243,9 @@ export default {
     this.$nextTick(function () {
       this.draw();
     });
+    this.$root.$emit('saveComponent', 'summaryByDifficulty', this.$refs.summaryByDifficulty);
+    this.$root.$emit('saveComponent', 'r', this.$refs.r);
+    this.$root.$emit('saveSummary', this.summary);
   },
 
   watch: {

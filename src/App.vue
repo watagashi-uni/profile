@@ -30,11 +30,17 @@
       div(v-else)
         keep-alive
           router-view
+      
+      Print
 </template>
 
 <script>
+import Print from './Print';
+
 export default {
   name: 'App',
+
+  components: { Print },
 
   data() {
     return {
@@ -51,10 +57,6 @@ export default {
       this.search = false;
       this.$router.push(`/user/${this.input}`);
     },
-  },
-
-  mounted() {
-    this.$sekai.loadDatabase();
   }
 };
 </script>
