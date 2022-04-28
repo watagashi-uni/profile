@@ -41,7 +41,7 @@
           v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
             .rank.my-auto All
         v-list-item-subtitle
-          .cell {{Object.values($db.musics).length}}
+          .cell {{userMusics.length}}
       
       Divider
 
@@ -113,11 +113,6 @@ export default {
           if (status.rank >= 'C') result['C'][level] += 1;
           if (status.rank >= 'F') result['F'][level] += 1;
           if (status.rank >= 'P') result['P'][level] += 1;
-        }
-      }
-      for (let musicId in this.$db.musicDifficulties) {
-        for (let musicDifficulty in this.$db.musicDifficulties[musicId]) {
-          let level = this.$db.musicDifficulties[musicId][musicDifficulty].playLevel;
           result['All'][level] += 1;
         }
       }

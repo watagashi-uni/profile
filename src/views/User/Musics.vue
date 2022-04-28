@@ -94,7 +94,7 @@ export default {
           }[status.rank] || 0.0;
         }
       }
-      return Object.values(userMusics);
+      return Object.values(userMusics).filter(music => this.$db.musics[music.musicId].publishedAt < new Date());
     },
 
     best39() {
