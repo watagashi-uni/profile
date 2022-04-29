@@ -31,6 +31,7 @@
         v-list-item(dense)
           v-list-item-title Music Details
         MusicDetails(:userMusics="userMusics", key="music-details")
+        .py-2
 
 </template>
 
