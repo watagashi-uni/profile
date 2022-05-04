@@ -112,7 +112,7 @@ export default {
     async _print() {
       let options = {
         backgroundColor: '#121212',
-        proxy: 'https://cors-proxy.pjsekai.moe/',
+        useCORS: true,
         scale: 2.0,
       };
 

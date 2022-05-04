@@ -165,13 +165,13 @@ export default {
         Object.values(this.$db.events).filter(event => event.id >= this.$sekai.eventStartID).forEach(event => {
           sekai.api(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
             if (id != this.id) return;
-            this.events[event.id] = response.rankings[0] || {};
+            this.events[event.id] = response.rankings && response.rankings[0] || {};
           });
         });
         Object.values(this.$db.rankMatchSeasons).forEach(rankMatch => {
           sekai.api(`/api/user/{user_id}/rank-match-season/${rankMatch.id}/ranking?targetUserId=${this.id}`).then(response => {
             if (id != this.id) return;
-            this.rankMatches[rankMatch.id] = response.rankings[0] || {};
+            this.rankMatches[rankMatch.id] = response.rankings && response.rankings[0] || {};
           });
         });
       });

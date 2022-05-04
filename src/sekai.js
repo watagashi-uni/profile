@@ -111,7 +111,8 @@ function Game(object) {
 const sekai = new Game({
   id: 'pjsekai',
   databaseHost: 'https://database.pjsekai.moe',
-  assetHost: 'https://assets.pjsek.ai/file/pjsekai-assets/startapp', // TODO: cache to pjsekai.moe
+  assetHost: 'https://asset.pjsekai.moe/startapp', // TODO: cache to pjsekai.moe
+  // assetHost: 'https://assets.pjsek.ai/file/pjsekai-assets/startapp', // TODO: cache to pjsekai.moe
   api: function (url) {
     return axios.get('https://api.pjsekai.moe' + url, {
       transformResponse: data => JSONbig({ storeAsString: true }).parse(data),
