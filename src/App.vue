@@ -32,6 +32,18 @@
           router-view
       
       Print
+    
+    v-snackbar(v-model="snackbar", :timeout="-1")
+      .text-center.mb-2 Application Updated.
+
+      v-row.mx-n2.my-0
+        v-col.px-2.py-0
+          v-btn.px-0.mt-2(block, color="primary", outlined, @click="snackbar=false") Dismiss
+        v-col.px-2.py-0
+          v-btn.px-0.mt-2(block, color="primary", outlined, @click="reload()")
+            v-icon mdi-refresh
+            span Refresh
+
 </template>
 
 <script>
@@ -48,6 +60,8 @@ export default {
       search: false,
       input: '',
 
+      snackbar: false,
+
       databaseStatus: this.$sekai.databaseStatus,
     };
   },
@@ -57,7 +71,13 @@ export default {
       this.search = false;
       this.$router.push(`/user/${this.input}`);
     },
-  }
+  },
+
+  mounted() {
+    this.$root.$on('applicationUpdated', () => {
+      this.snackbar = true;
+    });
+  },
 };
 </script>
 

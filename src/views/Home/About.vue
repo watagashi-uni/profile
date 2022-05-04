@@ -11,6 +11,9 @@
           v-btn(icon, href="https://gitlab.com/circlelin", target="_blank")
             v-icon mdi-gitlab
         v-list-item-action.ma-0
+          v-btn(icon, href="mailto:contact@pjsekai.moe")
+            v-icon mdi-email
+        v-list-item-action.ma-0
           v-btn(icon, href="https://twitter.com/nilcric_pjsekai", target="_blank")
             v-icon mdi-twitter
     Divider

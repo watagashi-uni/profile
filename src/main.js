@@ -24,7 +24,7 @@ Vue.prototype.$eventID = function () {
   return 31;
 };
 
-new Vue({
+const vue = new Vue({
   vuetify,
   router,
   render: h => h(App)
@@ -56,3 +56,5 @@ Date.prototype.toLocaleDateString = function () {
 Date.prototype.toLocaleString = function () {
   return this.format('YYYY/M/D H:mm:ss');
 };
+
+window.vue = vue;
