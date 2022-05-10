@@ -61,7 +61,9 @@ export default {
     userMusics() {
       let userMusics = {};
       for (let music of this.profile.userMusics.slice()) {
-        userMusics[music.musicId] = music;
+        if (this.$db.musics[music.musicId]) {
+          userMusics[music.musicId] = music;
+        }
       }
       for (let music of Object.values(this.$db.musics)) {
         if (!userMusics[music.id]) {
