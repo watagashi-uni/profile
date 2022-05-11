@@ -61,9 +61,8 @@ export default {
     userMusics() {
       let userMusics = {};
       for (let music of this.profile.userMusics.slice()) {
-        if (this.$db.musics[music.musicId]) {
-          userMusics[music.musicId] = music;
-        }
+        if (!this.$db.musics[music.musicId]) continue;
+        userMusics[music.musicId] = music;
       }
       for (let music of Object.values(this.$db.musics)) {
         if (!userMusics[music.id]) {
@@ -79,6 +78,7 @@ export default {
         }
       }
       for (let musicResult of this.profile.userMusicResults) {
+        if (!this.$db.musics[musicResult.musicId]) continue;
         userMusics[musicResult.musicId].userMusicDifficultyStatuses.find(status => status.musicDifficulty == musicResult.musicDifficulty).userMusicResults.push(musicResult);
       }
       for (let music of Object.values(userMusics)) {
