@@ -27,8 +27,8 @@
           .mr-4
             v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
               .rank.my-auto(:style="rankStyle(rank)") {{rank}}
-          v-list-item-subtitle
-            .d-flex
+          v-list-item-content
+            v-list-item-action-text.d-flex
               template(v-for="score, difficulty, i in difficulties")
                 .pr-2(v-if="i")
                 div(style="width: calc(20% - 3.2px)")
@@ -40,8 +40,9 @@
         .mr-4
           v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
             .rank.my-auto All
-        v-list-item-subtitle
-          .cell {{userMusics.length}}
+        v-list-item-content
+          v-list-item-action-text.d-flex
+            .cell {{userMusics.length}}
       
       Divider
 
