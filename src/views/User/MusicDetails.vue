@@ -122,7 +122,9 @@
                           span.ml-1 {{$db.musics[music.musicId].hot.toFixed(0)}}
                         template(v-else)
                           v-icon mdi-new-box
-                      .cell.score BPM {{($db.musics[music.musicId].bpms||[]).length>2?'~':''}}{{$db.musics[music.musicId].bpm}}
+                      .cell.score BPM 
+                        span {{($db.musics[music.musicId].bpms || []).filter(bpm => bpm.bpm).length > 1 ? '~' : ''}}
+                        span {{$db.musics[music.musicId].bpm}}
 
           Divider(v-show="detailID == music.musicId", inset=72)
 
