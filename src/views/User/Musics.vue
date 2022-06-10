@@ -91,7 +91,7 @@ export default {
           }[result.playResult])).reduce((x, y) => x > y ? x : y, '');
           status.r = {
             'P': 8.0 * (musicDifficulty.playLevel + (musicDifficulty.fullPerfectAdjust || 0)),
-            'F': 7.0 * (musicDifficulty.playLevel + (musicDifficulty.fullComboAdjust || 0)),
+            'F': 7.5 * (musicDifficulty.playLevel + (musicDifficulty.fullComboAdjust || 0)),
             'C': 5.0 * (musicDifficulty.playLevel + (musicDifficulty.playLevelAdjust || 0)),
             '': 0.0
           }[status.rank] || 0.0;

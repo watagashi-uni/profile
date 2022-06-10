@@ -279,7 +279,7 @@
               v-list-item
                 .mr-4
                   v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                    .cell.my-auto Last<br>Play
+                    .cell.my-auto Best<br>Play
                 v-list-item-content
                   v-list-item-action-text.d-flex
                     template(v-for="status, i in music.userMusicDifficultyStatuses")

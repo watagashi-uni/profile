@@ -44,9 +44,9 @@ export default {
     },
     rating() {
       return Math.round({
-        'P': 10.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.fullPerfectAdjust),
-        'F': 9.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.fullComboAdjust),
-        'C': 6.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.playLevelAdjust),
+        'P': 8.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.fullPerfectAdjust),
+        'F': 7.5 * (this.musicDifficulty.playLevel + this.musicDifficulty.fullComboAdjust),
+        'C': 5.0 * (this.musicDifficulty.playLevel + this.musicDifficulty.playLevelAdjust),
         '': 0.0
       }[this.rank] || 0);
     },

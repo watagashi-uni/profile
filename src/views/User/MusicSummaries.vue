@@ -51,9 +51,21 @@
     v-list.py-0.print(dense, ref="r")
       Divider
       v-list-item
-        v-list-item-title R
+        v-list-item-title Player R
         v-list-item-action-text {{r}}
+        v-btn(small, icon, @click="showInfo=!showInfo"): v-icon(small) mdi-information-outline
       Divider
+
+    v-expand-transition
+      div(v-show="showInfo")
+        .py-2
+        v-list-item(dense)
+          v-list-item-subtitle.text-wrap 
+            p Player R = Sum of the Music R in Best 39. 
+            p Music R = Rank (P / F / C) * Level+.
+            p Example: Full Combo of Level 30.0 is: 7.5 * 30.0 = 225.
+            p Rank: P = 8.0, F = 7.5, C = 5.0. 
+            p Level+: Estimated by P % and F %. The more players achieve All Perfect / Full Combo, the lower P / F Level+ adjusts. P / F / C Level+ are estimated separately. 
 
 </template>
 
@@ -73,6 +85,7 @@ export default {
     return {
       chart: null,
       showRank: 'All',
+      showInfo: false,
     };
   },
 
