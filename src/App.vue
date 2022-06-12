@@ -49,6 +49,8 @@
 <script>
 import Print from './Print';
 
+import { del } from 'idb-keyval';
+
 export default {
   name: 'App',
 
@@ -76,6 +78,11 @@ export default {
   mounted() {
     this.$root.$on('applicationUpdated', () => {
       this.snackbar = true;
+    });
+    this.$root.$on('reloadDatabase', () => {
+      del('pjsekai').then(() => {
+        location.reload();
+      });
     });
   },
 };

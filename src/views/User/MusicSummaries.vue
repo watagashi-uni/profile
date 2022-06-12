@@ -67,6 +67,14 @@
             p Rank: P = 8.0, F = 7.5, C = 5.0. 
             p Level+: Estimated by P % and F %. The more players achieve All Perfect / Full Combo, the lower P / F Level+ adjusts. P / F / C Level+ are estimated separately. 
 
+    .py-2
+
+    v-list.py-0(dense)
+      Divider
+      v-list-item(@click="$root.$emit('reloadDatabase')")
+        v-list-item-title.purple--text.text--lighten-2 Reload database
+      Divider
+
 </template>
 
 <script>

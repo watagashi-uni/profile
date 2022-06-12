@@ -22,14 +22,21 @@
                     v-list-item-title {{$db.musics[best39[i*3+j].musicId].title}}
                     v-list-item-action-text
                       template(v-if="best39[i*3+j].rank == 'P'")
-                        span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + ($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].fullPerfectAdjust || 0)).toFixed(1)}}
-                        span  → 
+                        template(v-if="$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].fullPerfectAdjust")
+                          span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + $db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].fullPerfectAdjust).toFixed(1)}}
+                        template(v-else)
+                          span {{$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel}} ?
                       template(v-if="best39[i*3+j].rank == 'F'")
-                        span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + ($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].fullComboAdjust || 0)).toFixed(1)}}
-                        span  → 
+                        template(v-if="$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].fullComboAdjust")
+                          span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + $db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].fullComboAdjust).toFixed(1)}}
+                        template(v-else)
+                          span {{$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel}} ?
                       template(v-if="best39[i*3+j].rank == 'C'")
-                        span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + ($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevelAdjust || 0)).toFixed(1)}}
-                        span  → 
+                        template(v-if="$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevelAdjust")
+                          span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + $db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevelAdjust).toFixed(1)}}
+                        template(v-else)
+                          span {{$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel}} ?
+                      span  → 
                       span {{Math.round(best39[i*3+j].r)}}
       Divider
     

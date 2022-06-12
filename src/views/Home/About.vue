@@ -37,7 +37,7 @@
 
     v-list.py-0(dense)
       Divider
-      v-list-item(@click="reloadDatabase")
+      v-list-item(@click="$root.$emit('reloadDatabase')")
         v-list-item-title.purple--text.text--lighten-2 Reload database
       Divider
     
@@ -53,7 +53,6 @@
 <script>
 import Divider from '@/components/Divider';
 import User from './User';
-import { del } from 'idb-keyval';
 
 export default {
   name: 'About',
@@ -89,13 +88,5 @@ export default {
       }
     };
   },
-
-  methods: {
-    reloadDatabase() {
-      del('pjsekai').then(() => {
-        location.reload();
-      });
-    },
-  }
 };
 </script>
