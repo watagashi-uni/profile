@@ -3,19 +3,37 @@
     Divider
     v-list.py-0(dense)
       User(:user="user")
-      Divider(inset=16)
-      v-list-item
+
+      Divider(inset=72)
+
+      v-list-item(href="https://twitter.com/nilcric_pjsekai", target="_blank")
+        v-icon.ml-2.mr-6 mdi-twitter
         v-list-item-content
-          v-list-item-title Contact
-        v-list-item-action.ma-0
-          v-btn(icon, href="https://gitlab.com/circlelin", target="_blank")
-            v-icon mdi-gitlab
-        v-list-item-action.ma-0
-          v-btn(icon, href="mailto:contact@pjsekai.moe")
-            v-icon mdi-email
-        v-list-item-action.ma-0
-          v-btn(icon, href="https://twitter.com/nilcric_pjsekai", target="_blank")
-            v-icon mdi-twitter
+          v-list-item-title Twitter
+          v-list-item-subtitle.text-wrap Developer's personal account
+
+      Divider(inset=72)
+
+      v-list-item(href="https://twitter.com/pjsekai_profile", target="_blank")
+        v-icon.ml-2.mr-6 mdi-robot
+        v-list-item-content
+          v-list-item-title Twitter Bot
+          v-list-item-subtitle.text-wrap Post updates and information about <a href="https://profile.pjsekai.moe">Project Sekai Profile</a>, including latest Level+.
+
+      Divider(inset=72)
+
+      v-list-item(href="https://gitlab.com/pjsekai/profile", target="_blank")
+        v-icon.ml-2.mr-6 mdi-gitlab
+        v-list-item-content
+          v-list-item-title GitLab
+
+      Divider(inset=72)
+
+      v-list-item(href="mailto:profile@pjsekai.moe")
+        v-icon.ml-2.mr-6 mdi-email
+        v-list-item-content
+          v-list-item-title Email
+
     Divider
     
     .py-2
