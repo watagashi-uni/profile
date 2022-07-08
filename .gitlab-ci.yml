@@ -10,7 +10,7 @@ pages:
     - master
   script:
     - npm i
-    - git clone git@gitlab.com:pjsekai/sprites.git src/sprites
+    - git clone https://gitlab.com/pjsekai/sprites.git src/sprites
     - npm run build
     - rm -rf public
     - mv dist public
