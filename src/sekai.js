@@ -120,10 +120,14 @@ const sekai = new Game({
   },
   requiredDatabases: [
     { name: 'gameCharacters', key: 'id' },
+    { name: 'gameCharacterUnits', key: 'id' },
     { name: 'cards', key: 'id' },
     { name: 'events', key: 'id' },
     { name: 'honors', key: 'id' },
     { name: 'honorGroups', key: 'id' },
+    { name: 'bonds', key: 'id' },
+    { name: 'bondsHonors', key: 'id' },
+    { name: 'bondsHonorWords', key: 'id' },
     { name: 'musics', key: 'id', host: 'https://musics.pjsekai.moe' },
     {
       name: 'musicDifficulties', host: 'https://musics.pjsekai.moe', function: function (data) {

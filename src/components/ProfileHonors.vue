@@ -3,7 +3,14 @@
     //- div {{profileHonors}}
 
     template(v-for="honor, i in profileHonors")
-      Honor(v-if="honor", :type="honor.profileHonorType", :id="honor.honorId", :level="honor.honorLevel", :size="size", :sub="i!=0")
+      Honor(v-if="honor",
+        :size="size",
+        :sub="i!=0",
+        :type="honor.profileHonorType",
+        :id="honor.honorId",
+        :level="honor.honorLevel",
+        :bondsHonorViewType="honor.bondsHonorViewType",
+        :bondsHonorWordId="honor.bondsHonorWordId")
       Honor(v-else, :size="size", :sub="i!=0")
 
     //- Honor(:type="userProfileHonors[0].profileHonorType", :id="userProfileHonors[0].honorId", :level="userProfileHonors[0].honorLevel", size=20)

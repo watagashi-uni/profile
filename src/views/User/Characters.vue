@@ -17,7 +17,7 @@
         v-col.px-2.py-1(v-for="character in profile.userCharacters", :key="`characters-rank-${character.characterId}`", cols=3)
           v-chip(pill, style="width: 100%; text-align: center")
             v-avatar(left)
-              v-img(:src="require(`@/assets/chara/chr_ts_${character.characterId}.png`)")
+              v-img(:src="require(`@/sprites/chr_ts_${character.characterId}.png`)")
             span {{character.characterRank}}
       Divider
     
@@ -31,7 +31,7 @@
         v-col.px-2.py-1(v-for="character in $db.gameCharacters", :key="`characters-challenge-${character.id}`", cols=3)
           v-chip(pill, style="width: 100%; text-align: center")
             v-avatar(left)
-              v-img(:src="require(`@/assets/chara/chr_ts_${character.id}.png`)")
+              v-img(:src="require(`@/sprites/chr_ts_${character.id}.png`)")
             span {{profile.userChallengeLiveSoloStages.filter(stage => stage.characterId == character.id).map(stage => stage.rank).reduce((x, y) => x > y ? x : y, '')}}
       Divider
     
