@@ -151,7 +151,7 @@ const sekai = new Game({
     // { name: 'materials', key: 'id' },
     // { name: 'gachaTickets', key: 'id' },
   ],
-  eventStartID: 31,
+  eventStartID: 71,
 });
 
 export default sekai;
