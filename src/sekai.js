@@ -114,7 +114,12 @@ const sekai = new Game({
   assetHost: 'https://asset.pjsekai.moe/startapp', // TODO: cache to pjsekai.moe
   // assetHost: 'https://assets.pjsek.ai/file/pjsekai-assets/startapp', // TODO: cache to pjsekai.moe
   api: function (url) {
-    return axios.get('https://api.pjsekai.moe' + url, {
+    return axios.get('https://api.unipjsk.com' + url, {
+      transformResponse: data => JSONbig({ storeAsString: true }).parse(data),
+    }).then(response => response.data);
+  },
+  profile: function (url) {
+    return axios.get('https://suite.unipjsk.com' + url, {
       transformResponse: data => JSONbig({ storeAsString: true }).parse(data),
     }).then(response => response.data);
   },
@@ -128,9 +133,9 @@ const sekai = new Game({
     { name: 'bonds', key: 'id' },
     { name: 'bondsHonors', key: 'id' },
     { name: 'bondsHonorWords', key: 'id' },
-    { name: 'musics', key: 'id', host: 'https://musics.pjsekai.moe' },
+    { name: 'musics', key: 'id', host: 'https://database.pjsekai.moe' },
     {
-      name: 'musicDifficulties', host: 'https://musics.pjsekai.moe', function: function (data) {
+      name: 'musicDifficulties', host: 'https://assets.unipjsk.com', function: function (data) {
         let musicDifficulties = {};
         for (let musicDifficulty of data) {
           if (!musicDifficulties[musicDifficulty.musicId]) {
@@ -151,7 +156,7 @@ const sekai = new Game({
     // { name: 'materials', key: 'id' },
     // { name: 'gachaTickets', key: 'id' },
   ],
-  eventStartID: 71,
+  eventStartID: 1,
 });
 
 export default sekai;

@@ -7,14 +7,14 @@
       v-tabs(v-model="tab1", fixed-tabs)
         v-tab.px-0 Rank Match<br>Tops
         v-tab.px-0 Event<br>Tops
-        v-tab.px-0 Event<br>Lines
+        //- v-tab.px-0 Event<br>Lines
       v-tabs-items(touchless, v-model="tab1")
         v-tab-item
           Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
         v-tab-item
           Rankings(:rankings="eventTops", showEvent, key="event-tops")
-        v-tab-item
-          Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
+        //- v-tab-item
+        //-   Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
       .py-2
       v-list-item(dense)
         v-list-item-title About
@@ -38,14 +38,14 @@
         v-tabs(v-model="tab1", fixed-tabs)
           v-tab.px-0 Rank Match<br>Tops
           v-tab.px-0 Event<br>Tops
-          v-tab.px-0 Event<br>Lines
+          //- v-tab.px-0 Event<br>Lines
         v-tabs-items(touchless, v-model="tab1")
           v-tab-item
             Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
           v-tab-item
             Rankings(:rankings="eventTops", showEvent, key="event-tops")
-          v-tab-item
-            Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
+          //- v-tab-item
+          //-   Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
         .py-2
 
     .d-flex(v-if="$vuetify.breakpoint.lgAndUp")
@@ -64,12 +64,12 @@
         .py-1
         v-tabs(v-model="tab2", fixed-tabs)
           v-tab.px-0 Event<br>Tops
-          v-tab.px-0 Event<br>Lines
+          //- v-tab.px-0 Event<br>Lines
         v-tabs-items(touchless, v-model="tab2")
           v-tab-item
             Rankings(:rankings="eventTops", showEvent, key="event-tops")
-          v-tab-item
-            Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
+          //- v-tab-item
+          //-   Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
         .py-2
 
       v-divider(vertical)
@@ -150,20 +150,20 @@ export default {
       this.followings = [];
       this.rankMatchTops = null;
 
-      sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetRank=1&lowerLimit=99`).then(response => {
+      sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?rankingViewType=top100`).then(response => {
         this.eventTops = response.rankings;
       });
-      this.ranks.forEach(rank => {
-        sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetRank=${rank}`).then(response => {
-          let ranking = response.rankings[0];
-          if (ranking) {
-            this.eventRankings.push(ranking);
-            this.eventRankings.sort((a, b) => a.rank - b.rank);
-          }
-        });
-      });
+      // this.ranks.forEach(rank => {
+      //   sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetRank=${rank}`).then(response => {
+      //     let ranking = response.rankings[0];
+      //     if (ranking) {
+      //       this.eventRankings.push(ranking);
+      //       this.eventRankings.sort((a, b) => a.rank - b.rank);
+      //     }
+      //   });
+      // });
 
-      sekai.api(`/api/user/{user_id}/rank-match-season/${this.rankMatchSeasonID}/ranking?targetRank=1&lowerLimit=99`).then(response => {
+      sekai.api(`/api/user/{user_id}/rank-match-season/${this.rankMatchSeasonID}/ranking?rankingViewType=top100`).then(response => {
         this.rankMatchTops = response.rankings;
       });
 
@@ -192,7 +192,7 @@ export default {
             user.score = 0;
           }
           this.followings.push(user);
-          sekai.api(`/api/user/{user_id}/event/${this.eventID}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
+          sekai.api(`/api/user/event/${this.eventID}/ranking?targetUserId=${user.userProfile.userId}`).then(response => {
             let ranking = response.rankings[0];
             if (ranking) {
               if (ranking.userId == user.userProfile.userId) {

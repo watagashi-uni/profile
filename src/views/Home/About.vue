@@ -3,6 +3,21 @@
     Divider
     v-list.py-0(dense)
       User(:user="user")
+      Divider(inset=72)
+
+      v-list-item(href="", target="_blank")
+        v-icon.ml-2.mr-6 mdi-code-braces
+        v-list-item-content
+          v-list-item-title 该网页为魔改版
+          v-list-item-subtitle.text-wrap 官方API已不能查到详细信息
+
+      Divider(inset=72)
+
+      v-list-item(href="https://suite.unipjsk.com/", target="_blank")
+        v-icon.ml-2.mr-6 mdi-upload
+        v-list-item-content
+          v-list-item-title 自行上传用户数据
+          v-list-item-subtitle.text-wrap 上传数据后才能查询。需勾选“公开API读取”
 
       Divider(inset=72)
 
@@ -41,14 +56,11 @@
       v-list-item-title Links
     Divider
     v-list.py-0(dense)
-      v-list-item(href="https://sekai.best", target="_blank")
-        v-list-item-title Sekai Viewer
-      Divider(inset=16)
       v-list-item(href="https://pjsek.ai", target="_blank")
         v-list-item-title pjsek.ai
       Divider(inset=16)
-      v-list-item(href="https://shop.pjsekai.moe", target="_blank")
-        v-list-item-title Project Sekai Account Shop
+      v-list-item(href="https://sekai.best", target="_blank")
+        v-list-item-title Sekai Viewer
     Divider
     
     .py-2

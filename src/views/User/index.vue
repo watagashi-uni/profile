@@ -2,7 +2,7 @@
   .pa-8.text-center(v-if="!profile")
     v-progress-circular(indeterminate, color="primary")
     .pa-2.caption
-      span Loading profile...
+      span Loading profile...<br>如果一直加载，说明无用户数据或者设置了仅Unibot可见
 
   div(v-else)
     .d-block(v-if="$vuetify.breakpoint.smAndDown")
@@ -158,18 +158,18 @@ export default {
       Object.keys(this.events).forEach(i => this.events[i] = null);
       Object.keys(this.rankMatches).forEach(i => this.rankMatches[i] = null);
 
-      sekai.api(`/api/user/${this.id}/profile`).then(response => {
+      sekai.profile(`/api/user/${this.id}/profile`).then(response => {
         if (id != this.id) return;
         this.profile = response;
       }).then(() => {
         Object.values(this.$db.events).filter(event => event.id >= this.$sekai.eventStartID).forEach(event => {
-          sekai.api(`/api/user/{user_id}/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
+          sekai.profile(`/api/user/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
             if (id != this.id) return;
             this.events[event.id] = response.rankings && response.rankings[0] || {};
           });
         });
         Object.values(this.$db.rankMatchSeasons).forEach(rankMatch => {
-          sekai.api(`/api/user/{user_id}/rank-match-season/${rankMatch.id}/ranking?targetUserId=${this.id}`).then(response => {
+          sekai.profile(`/api/user/rank-match-season/${rankMatch.id}/ranking?targetUserId=${this.id}`).then(response => {
             if (id != this.id) return;
             this.rankMatches[rankMatch.id] = response.rankings && response.rankings[0] || {};
           });
