@@ -20,7 +20,7 @@
           v-card.d-flex(elevation=24)
             v-list.py-0(dense)
               v-list-item
-                v-list-item-subtitle Sort by music
+                v-list-item-subtitle 按乐曲分类
               Divider
               template(v-for="sort, i in Object.values(sorts).filter(sort => !sort.byDifficulty)")
                 Divider(inset=48, v-if="i")
@@ -36,7 +36,7 @@
 
             v-list.py-0(dense)
               v-list-item
-                v-list-item-subtitle Sort by score
+                v-list-item-subtitle 按成绩分类
               Divider
               template(v-for="sort, i in Object.values(sorts).filter(sort => sort.byDifficulty)")
                 Divider(inset=48, v-if="i")
@@ -69,7 +69,7 @@
             v-img(:src="`${$sekai.assetHost}/thumbnail/music_jacket/${$db.musics[music.musicId].assetbundleName}.png`")
           v-list-item-content
             v-list-item-title.d-flex
-              v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="detailID == music.musicId || sortID == 'id'") ID {{music.musicId}}
+              v-list-item-subtitle.pr-1(style="flex: 0 1 auto", v-if="detailID == music.musicId || sortID == 'id'") 乐曲ID {{music.musicId}}
               span {{$db.musics[music.musicId].title}}
             v-list-item-subtitle.d-flex
               template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -122,7 +122,7 @@
                       //-     span.ml-1 {{$db.musics[music.musicId].hot.toFixed(0)}}
                       //-   template(v-else)
                       //-     v-icon mdi-new-box
-                      //- .cell.score BPM 
+                      //- .cell.score BPM
                       //-   span {{($db.musics[music.musicId].bpms || []).filter(bpm => bpm.bpm).length > 1 ? '~' : ''}}
                       //-   span {{$db.musics[music.musicId].bpm}}
 
@@ -258,7 +258,7 @@
                       .pr-2(v-if="i")
                       .cell.score(style="width: calc(20% - 3.2px)")
                         | {{status.userMusicResults.map(result => result.mvpCount).reduce((x, y) => x + y, 0)}}
-                        | / 
+                        | /
                         | {{status.userMusicResults.map(result => result.superStarCount).reduce((x, y) => x + y, 0)}}
 
               v-list-item

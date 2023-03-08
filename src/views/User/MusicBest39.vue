@@ -36,13 +36,13 @@
                           span {{($db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel + $db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevelAdjust).toFixed(1)}}
                         template(v-else)
                           span {{$db.musicDifficulties[best39[i*3+j].musicId][best39[i*3+j].musicDifficulty].playLevel}} ?
-                      span  → 
+                      span  →
                       span {{Math.round(best39[i*3+j].r)}}
       Divider
-    
+
     .py-2
     .px-4
-      v-btn(block, @click="$root.$emit('print')") download image
+      v-btn(block, @click="$root.$emit('print')") 下载图片
 
 </template>
 

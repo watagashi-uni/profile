@@ -2,7 +2,7 @@
   .pa-8.text-center(v-if="!profile")
     v-progress-circular(indeterminate, color="primary")
     .pa-2.caption
-      span Loading profile...<br>如果一直加载，说明无用户数据或者设置了仅Unibot可见
+      span 加载profile中...<br>如果一直加载，说明无用户数据或者设置了仅Unibot可见
 
   div(v-else)
     .d-block(v-if="$vuetify.breakpoint.smAndDown")
@@ -45,17 +45,17 @@
       .split(style="width: calc(100% - 360px - 1px - (100% - 720px) / 4)")
         .py-2
         v-list-item(dense)
-          v-list-item-title Musics
+          v-list-item-title 乐曲
         Musics(:profile="profile", key="user-musics")
         .py-2
-    
+
     .d-flex(v-if="$vuetify.breakpoint.lg")
       .split(style="width: 360px")
         .py-2
         Profile(:profile="profile", key="user-profile")
         .py-2
         v-list-item(dense)
-          v-list-item-title Characters
+          v-list-item-title 角色
         Characters(:profile="profile", key="user-characters")
         .py-2
 
@@ -64,7 +64,7 @@
       .split(style="width: calc(100% - 720px - 2px - (100% - 1080px) / 4)")
         .py-2
         v-list-item(dense)
-          v-list-item-title Musics
+          v-list-item-title 乐曲
         Musics(:profile="profile", key="user-musics")
         .py-2
 
@@ -81,14 +81,14 @@
           v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")
         .py-2
-    
+
     .d-flex(v-if="$vuetify.breakpoint.xl")
       .split(style="width: 360px")
         .py-2
         Profile(:profile="profile", key="user-profile")
         .py-2
         v-list-item(dense)
-          v-list-item-title Characters
+          v-list-item-title 角色
         Characters(:profile="profile", key="user-characters")
         .py-2
 

@@ -2,8 +2,8 @@
   .pa-8.text-center(v-if="!rankings")
     v-progress-circular(indeterminate, color="primary")
     .pa-2.caption
-      span Loading rankings...
-  
+      span 加载排行榜中...
+
   v-list.py-0(dense, v-else)
     Divider
 
@@ -20,7 +20,7 @@
     div(v-if="rankings.length == 0")
       v-list-item
         v-list-item-content
-          v-list-item-subtitle None
+          v-list-item-subtitle 空
     Divider
 
 </template>

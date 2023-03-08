@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     v-list-item(dense)
-      v-list-item-title Followings 
+      v-list-item-title 关注列表
       v-list-item-action: v-btn(icon, @click="onRefresh"): v-icon mdi-refresh
       v-list-item-action: v-btn(icon, @click="editing=!editing"): v-icon mdi-playlist-edit
     v-expand-transition
@@ -10,19 +10,19 @@
         .d-flex
           v-list-item.pr-0(@click="$refs['import-file'].click()")
             v-icon mdi-import
-            v-list-item-title Import
+            v-list-item-title 导入
           v-divider(vertical)
           v-list-item.pr-0(@click="onExport")
             v-icon mdi-export
-            v-list-item-title Export
+            v-list-item-title 导出
           v-divider(vertical)
           v-list-item.pr-0(@click="onAll")
             v-icon mdi-select-all
-            v-list-item-title All
+            v-list-item-title 全选
           v-divider(vertical)
           v-list-item.pr-0(@click="onDelete")
             v-icon mdi-delete
-            v-list-item-title Delete
+            v-list-item-title 删除
         input(ref="import-file", style="display: none", type="file", accept=".json", @change="onImport")
     Rankings(:rankings="followings", :editing="editing", ref="following-list", showEvent)
 </template>
