@@ -1,5 +1,7 @@
 # profile
 
+修改自 https://gitlab.com/pjsekai/profile
+
 ## Project setup
 ```
 npm install
