@@ -10,7 +10,7 @@
     .py-2
 
     v-list-item(dense)
-      v-list-item-title Character Rank
+      v-list-item-title 角色等级
     v-list.py-0(dense)
       Divider
       v-row.px-2.py-1.ma-0
@@ -20,11 +20,11 @@
               v-img(:src="require(`@/sprites/chr_ts_${character.characterId}.png`)")
             span {{character.characterRank}}
       Divider
-    
+
     .py-2
 
     v-list-item(dense)
-      v-list-item-title Challenge Stage
+      v-list-item-title 挑战等级
     v-list.py-0(dense)
       Divider
       v-row.px-2.py-1.ma-0
@@ -34,7 +34,7 @@
               v-img(:src="require(`@/sprites/chr_ts_${character.id}.png`)")
             span {{profile.userChallengeLiveSoloStages.filter(stage => stage.characterId == character.id).map(stage => stage.rank).reduce((x, y) => x > y ? x : y, '')}}
       Divider
-    
+
 </template>
 
 <script>

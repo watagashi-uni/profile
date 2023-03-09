@@ -4,13 +4,13 @@
       HonorList(:honors="rareHonors")
 
       .py-2
-    
+
     v-expand-transition
       div(v-show="!show")
         v-list.py-0(dense)
           Divider
           v-list-item(@click="show=true")
-            v-list-item-title Show all honors
+            v-list-item-title 显示所有铭牌
           Divider
 
     v-expand-transition

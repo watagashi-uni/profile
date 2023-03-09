@@ -6,30 +6,30 @@
 
       v-tabs(v-model="tab", fixed-tabs)
         v-tab(style="min-width: 40px") best 39
-        v-tab(style="min-width: 40px") details
+        v-tab(style="min-width: 40px") 详情
 
       v-tabs-items(touchless, v-model="tab")
         v-tab-item: MusicBest39(:best39="best39", key="music-best-39")
         v-tab-item: MusicDetails(:userMusics="userMusics", key="music-details")
-    
+
     .d-flex(v-if="$vuetify.breakpoint.xl")
       .split(style="width: calc(50% - 0.5px)")
         .py-2
         v-list-item(dense)
-          v-list-item-title Musics
+          v-list-item-title 乐曲
         MusicSummaries(:userMusics="userMusics", :r="r" key="music-summaries")
         .py-2
         v-list-item(dense)
           v-list-item-title Best 39
         MusicBest39(:best39="best39", key="music-best-39")
         .py-2
-      
+
       v-divider(vertical)
 
       .split(style="width: calc(50% - 0.5px)")
         .py-2
         v-list-item(dense)
-          v-list-item-title Music Details
+          v-list-item-title 乐曲详情
         MusicDetails(:userMusics="userMusics", key="music-details")
         .py-2
 

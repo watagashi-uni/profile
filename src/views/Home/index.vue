@@ -5,8 +5,8 @@
       Followings(:followings="followings", key="followings")
       .py-2
       v-tabs(v-model="tab1", fixed-tabs)
-        v-tab.px-0 Rank Match<br>Tops
-        v-tab.px-0 Event<br>Tops
+        v-tab.px-0 排位赛<br>前100名
+        v-tab.px-0 活动<br>前100名
         //- v-tab.px-0 Event<br>Lines
       v-tabs-items(touchless, v-model="tab1")
         v-tab-item
@@ -17,7 +17,7 @@
         //-   Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
       .py-2
       v-list-item(dense)
-        v-list-item-title About
+        v-list-item-title 关于
       About
       .py-2
 
@@ -27,17 +27,17 @@
         Followings(:followings="followings", key="followings")
         .py-2
         v-list-item(dense)
-          v-list-item-title About
+          v-list-item-title 关于
         About
         .py-2
-      
+
       v-divider(vertical)
 
       .split(style="width: calc((100% - 1px) / 2)")
         .py-1
         v-tabs(v-model="tab1", fixed-tabs)
-          v-tab.px-0 Rank Match<br>Tops
-          v-tab.px-0 Event<br>Tops
+          v-tab.px-0 排位赛<br>前100名
+          v-tab.px-0 活动<br>前100名
           //- v-tab.px-0 Event<br>Lines
         v-tabs-items(touchless, v-model="tab1")
           v-tab-item
@@ -54,16 +54,16 @@
         Followings(:followings="followings", key="followings")
         .py-2
         v-list-item(dense)
-          v-list-item-title About
+          v-list-item-title 关于
         About
         .py-2
-      
+
       v-divider(vertical)
 
       .split(style="width: calc((100% - 2px) / 3)")
         .py-1
         v-tabs(v-model="tab2", fixed-tabs)
-          v-tab.px-0 Event<br>Tops
+          v-tab.px-0 活动<br>前100名
           //- v-tab.px-0 Event<br>Lines
         v-tabs-items(touchless, v-model="tab2")
           v-tab-item
@@ -77,16 +77,16 @@
       //- .split(style="width: calc((100% - 2px) / 3)")
       //-   .py-2
       //-   v-list-item(dense)
-      //-     v-list-item-title Rankings 
+      //-     v-list-item-title Rankings
       //-   Rankings(:rankings="eventRankings", showEvent, key="event-rankings")
-      //-   .py-2    
+      //-   .py-2
 
       .split(style="width: calc((100% - 2px) / 3)")
         .py-2
         v-list-item(dense)
-          v-list-item-title Rank Match Tops
+          v-list-item-title 排位赛前100名
         Rankings(:rankings="rankMatchTops", showRankMatch, key="rank-match-tops")
-        .py-2    
+        .py-2
 
 </template>
 

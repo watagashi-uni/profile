@@ -5,7 +5,7 @@
       div(ref="summary", style="height: 270px; width: calc(100% - 1px)")
       v-select.px-4(dense, v-model="showRank", :items="showRanks")
       Divider
-    
+
     .py-2
 
     v-list.py-0.print(dense, ref="summaryByDifficulty")
@@ -39,11 +39,11 @@
       v-list-item
         .mr-4
           v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-            .rank.my-auto All
+            .rank.my-auto 全部
         v-list-item-content
           v-list-item-action-text.d-flex
             .cell {{userMusics.length}}
-      
+
       Divider
 
     .py-2
@@ -51,7 +51,7 @@
     v-list.py-0.print(dense, ref="r")
       Divider
       v-list-item
-        v-list-item-title Player R
+        v-list-item-title 玩家R值
         v-list-item-action-text {{r}}
         v-btn(small, icon, @click="showInfo=!showInfo"): v-icon(small) mdi-information-outline
       Divider
@@ -60,19 +60,19 @@
       div(v-show="showInfo")
         .py-2
         v-list-item(dense)
-          v-list-item-subtitle.text-wrap 
-            p Player R = Sum of the Music R in Best 39. 
-            p Music R = Rank (P / F / C) * Level+.
-            p Example: Full Combo of Level 30.0 is: 7.5 * 30.0 = 225.
-            p Rank: P = 8.0, F = 7.5, C = 5.0. 
-            p Level+: Estimated by P % and F %. The more players achieve All Perfect / Full Combo, the lower P / F Level+ adjusts. P / F / C Level+ are estimated separately. 
+          v-list-item-subtitle.text-wrap
+            p 玩家R值是Best 39的乐曲R值的总和。
+            p 乐曲R值 = 评级 (P / F / C) * Level+。
+            p 示例: Level 30.0的乐曲的Full Combo成绩的乐曲R值为 7.5 * 30.0 = 225。
+            p 评价: P = 8.0, F = 7.5, C = 5.0。
+            p Level+: 根据P率和F率估计。越多玩家达成All Perfect / Full Combo，P / F Level+会被调整地越低. P / F / C 的 Level+ 是分开估计的。
 
     .py-2
 
     v-list.py-0(dense)
       Divider
       v-list-item(@click="$root.$emit('reloadDatabase')")
-        v-list-item-title.purple--text.text--lighten-2 Reload database
+        v-list-item-title.purple--text.text--lighten-2 刷新数据
       Divider
 
 </template>
@@ -99,17 +99,17 @@ export default {
 
   computed: {
     showRanks: () => [
-      { text: 'Bars', value: 'bar' },
-      { text: 'Default', value: 'All' },
+      { text: '柱状图', value: 'bar' },
+      { text: '默认', value: 'All' },
       // { text: 'Show unlocked musics', value: 'Unlocked' },
       // { text: 'Show cleared musics', value: 'C' },
     ],
     ranks: () => [
-      { name: 'All', color: '#333333', hint: 'All' },
-      { name: 'Unlocked', color: '#666666', hint: 'Unlocked' },
-      { name: 'C', color: '#FFB74D', hint: 'Clear' },
-      { name: 'F', color: '#F06292', hint: 'Full Combo' },
-      { name: 'P', color: '#FFFFFF', hint: 'All Perfect' },
+      { name: 'All', color: '#333333', hint: '全部' },
+      { name: 'Unlocked', color: '#666666', hint: '已解锁' },
+      { name: 'C', color: '#FFB74D', hint: '已Clear' },
+      { name: 'F', color: '#F06292', hint: '已Full Combo' },
+      { name: 'P', color: '#FFFFFF', hint: '已All Perfect' },
     ],
     difficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
     difficultyColors: () => ({

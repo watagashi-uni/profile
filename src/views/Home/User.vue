@@ -14,14 +14,14 @@
 
         v-list-item-action.ml-2(v-if="editing")
           v-checkbox(:input-value="active")
-        
+
         template(v-if="showEvent")
           v-list-item-action.ml-2(v-if="user.score===undefined")
             v-list-item-action-text ...
           v-list-item-action.ml-2(v-else-if="user.score!==false")
             v-list-item-title.align-self-end(v-if="user.rank") # {{user.rank}}
             v-list-item-action-text {{user.score}} P
-        
+
         template(v-if="showRankMatch")
           v-list-item-action.ml-2(v-if="user.userRankMatchSeason===undefined")
             v-list-item-action-text ...
@@ -32,11 +32,11 @@
               | {{$db.rankMatchGrades[$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].rankMatchGradeId].name}}・{{$db.rankMatchClasses[$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].rankMatchClassId].name}}
               | ({{user.userRankMatchSeason.tierPoint}}{{$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].point&&'/'}}{{$db.rankMatchTiers[user.userRankMatchSeason.rankMatchTierId].point}})
             v-list-item-action-text
-              | Win {{user.userRankMatchSeason.winCount}}
+              | 胜利 {{user.userRankMatchSeason.winCount}}
               | |
-              | Draw {{user.userRankMatchSeason.drawCount}}
+              | 平局 {{user.userRankMatchSeason.drawCount}}
               | |
-              | Lose {{user.userRankMatchSeason.loseCount-user.userRankMatchSeason.penaltyCount}}+{{user.userRankMatchSeason.penaltyCount}}
+              | 失败 {{user.userRankMatchSeason.loseCount-user.userRankMatchSeason.penaltyCount}}+{{user.userRankMatchSeason.penaltyCount}}
 
 </template>
 
