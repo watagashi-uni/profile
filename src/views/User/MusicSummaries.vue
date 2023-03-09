@@ -99,17 +99,17 @@ export default {
 
   computed: {
     showRanks: () => [
-      { text: 'Bars', value: 'bar' },
-      { text: 'Default', value: 'All' },
+      { text: '柱状图', value: 'bar' },
+      { text: '默认', value: 'All' },
       // { text: 'Show unlocked musics', value: 'Unlocked' },
       // { text: 'Show cleared musics', value: 'C' },
     ],
     ranks: () => [
-      { name: 'All', color: '#333333', hint: 'All' },
-      { name: 'Unlocked', color: '#666666', hint: 'Unlocked' },
-      { name: 'C', color: '#FFB74D', hint: 'Clear' },
-      { name: 'F', color: '#F06292', hint: 'Full Combo' },
-      { name: 'P', color: '#FFFFFF', hint: 'All Perfect' },
+      { name: 'All', color: '#333333', hint: '全部' },
+      { name: 'Unlocked', color: '#666666', hint: '已解锁' },
+      { name: 'C', color: '#FFB74D', hint: '已Clear' },
+      { name: 'F', color: '#F06292', hint: '已Full Combo' },
+      { name: 'P', color: '#FFFFFF', hint: '已All Perfect' },
     ],
     difficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
     difficultyColors: () => ({

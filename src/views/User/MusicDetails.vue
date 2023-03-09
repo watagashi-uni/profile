@@ -210,7 +210,7 @@
               v-list-item
                 .mr-4
                   v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                    .cell.my-auto Notes
+                    .cell.my-auto 物量
                 v-list-item-content
                   v-list-item-action-text.d-flex
                     template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -223,7 +223,7 @@
               v-list-item
                 .mr-4
                   v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                    .cell.my-auto View
+                    .cell.my-auto 谱面<br>预览
                 v-list-item-content
                   v-list-item-action-text.d-flex
                     template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -240,7 +240,7 @@
               v-list-item
                 .mr-4
                   v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                    .cell.my-auto Score
+                    .cell.my-auto 成绩
                 v-list-item-content
                   v-list-item-action-text.d-flex
                     template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -264,7 +264,7 @@
               v-list-item
                 .mr-4
                   v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                    .cell.my-auto First<br>Play
+                    .cell.my-auto 首次<br>游玩
                 v-list-item-content
                   v-list-item-action-text.d-flex
                     template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -279,7 +279,7 @@
               v-list-item
                 .mr-4
                   v-list-item-subtitle.d-flex(style="height: 40px; width: 40px")
-                    .cell.my-auto Best<br>Play
+                    .cell.my-auto 最好<br>成绩
                 v-list-item-content
                   v-list-item-action-text.d-flex
                     template(v-for="status, i in music.userMusicDifficultyStatuses")
@@ -329,14 +329,14 @@ export default {
     ],
     genres() {
       return [
-        { text: 'All', value: 'all' },
-        { text: 'バーチャル・シンガー', value: 'vocaloid' },
+        { text: '全部', value: 'all' },
+        { text: '虚拟歌手', value: 'vocaloid' },
         { text: 'Leo/need', value: 'light_music_club' },
         { text: 'MORE MORE JUMP！', value: 'idol' },
         { text: 'Vivid BAD SQUAD', value: 'street' },
-        { text: 'ワンダーランズ×ショウタイム', value: 'theme_park' },
+        { text: 'Wonderlands×Showtime', value: 'theme_park' },
         { text: '25時、ナイトコードで。', value: 'school_refusal' },
-        { text: 'Others', value: 'other' },
+        { text: '其他', value: 'other' },
       ];
     },
     difficulties: () => ['easy', 'normal', 'hard', 'expert', 'master'],
@@ -344,35 +344,35 @@ export default {
       return {
         default: {
           id: 'default',
-          name: 'Default',
+          name: '默认',
           byDifficulty: false,
           sortOrder: 1,
           sortFunctions: [this.sortFunctions.default],
         },
         id: {
           id: 'id',
-          name: 'ID',
+          name: '乐曲ID',
           byDifficulty: false,
           sortOrder: 1,
           sortFunctions: [this.sortFunctions.id],
         },
         name: {
           id: 'name',
-          name: 'Name',
+          name: '标题',
           byDifficulty: false,
           sortOrder: 1,
           sortFunctions: [this.sortFunctions.name],
         },
         releaseTime: {
           id: 'releaseTime',
-          name: 'Release time',
+          name: '上线时间',
           byDifficulty: false,
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.releaseTime, this.sortFunctions.default],
         },
         hot: {
           id: 'hot',
-          name: 'Hot',
+          name: '热门',
           byDifficulty: false,
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.hot, this.sortFunctions.default],
@@ -426,14 +426,14 @@ export default {
         // },
         rank: {
           id: 'rank',
-          name: 'Rank',
+          name: '评级',
           byDifficulty: true,
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.rank, this.sortFunctions.level, this.sortFunctions.levelAdjust],
         },
         notes: {
           id: 'notes',
-          name: 'Notes',
+          name: '物量',
           byDifficulty: true,
           sortOrder: -1,
           sortFunctions: [this.sortFunctions.notes, this.sortFunctions.level, this.sortFunctions.levelAdjust],

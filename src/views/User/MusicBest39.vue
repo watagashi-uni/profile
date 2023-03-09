@@ -42,7 +42,7 @@
 
     .py-2
     .px-4
-      v-btn(block, @click="$root.$emit('print')") 下载图片
+      v-btn(block, @click="$root.$emit('print')") 导出为图片
 
 </template>
 

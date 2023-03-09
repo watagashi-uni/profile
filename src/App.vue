@@ -4,7 +4,7 @@
       v-btn(icon, to="/", v-if="$route.path != '/'")
         v-icon mdi-home
 
-      v-toolbar-title Project Sekai Profile
+      v-toolbar-title Project Sekai Profile Modified Ver.
 
       v-spacer
 

@@ -57,7 +57,7 @@ export default {
     onExport() {
       let model = this.$refs['following-list'].model.length ? this.$refs['following-list'].model : this.followings.map((_, i) => i);
       let users = model.map(x => this.followings[x]);
-      FileSaver.saveAs(new Blob([JSON.stringify(users)]), 'Followings on profile.pjsekai.moe.json');
+      FileSaver.saveAs(new Blob([JSON.stringify(users)]), 'profile.unipjsk.com的关注列表.json');
     },
     onImport(e) {
       let file = e.target.files[0];
