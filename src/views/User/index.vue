@@ -17,8 +17,8 @@
         v-tab(style="min-width: 40px"): v-icon mdi-heart
       v-tabs-items(touchless, v-model="tab1")
         v-tab-item: Musics(:profile="profile", key="user-musics")
-        v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
-        v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
+        v-tab-item: Events(:profile="profile", key="user-events")
+        v-tab-item: RankMatches(:profile="profile", key="user-rank-matches")
         v-tab-item: Honors(:profile="profile", key="user-honors")
         v-tab-item: Characters(:profile="profile", key="user-characters")
       .py-2
@@ -34,8 +34,8 @@
           v-tab: v-icon mdi-tag
           v-tab: v-icon mdi-heart
         v-tabs-items(touchless, v-model="tab2")
-          v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
-          v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
+          v-tab-item: Events(:profile="profile", key="user-events")
+          v-tab-item: RankMatches(:profile="profile", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")
           v-tab-item: Characters(:profile="profile", key="user-characters")
         .py-2
@@ -77,8 +77,8 @@
           v-tab: v-icon mdi-podium-gold
           v-tab: v-icon mdi-tag
         v-tabs-items(touchless, v-model="tab3")
-          v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
-          v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
+          v-tab-item: Events(:profile="profile", key="user-events")
+          v-tab-item: RankMatches(:profile="profile", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")
         .py-2
 
@@ -110,8 +110,8 @@
           v-tab: v-icon mdi-podium-gold
           v-tab: v-icon mdi-tag
         v-tabs-items(touchless, v-model="tab3")
-          v-tab-item: Events(:profile="profile", :rankings="events", key="user-events")
-          v-tab-item: RankMatches(:profile="profile", :rankings="rankMatches", key="user-rank-matches")
+          v-tab-item: Events(:profile="profile", key="user-events")
+          v-tab-item: RankMatches(:profile="profile", key="user-rank-matches")
           v-tab-item: Honors(:profile="profile", key="user-honors")
         .py-2
 
@@ -136,14 +136,8 @@ export default {
   components: { Divider, Profile, Musics, Events, Characters, Honors, RankMatches },
 
   data() {
-    let events = {};
-    Object.values(this.$db.events).forEach(event => events[event.id] = null);
-    let rankMatches = {};
-    Object.values(this.$db.rankMatchSeasons).forEach(rankMatch => rankMatches[rankMatch.id] = null);
     return {
       profile: null,
-      events: events,
-      rankMatches: rankMatches,
 
       tab1: null,
       tab2: null,
@@ -155,25 +149,10 @@ export default {
     load() {
       let id = this.id;
       this.profile = null;
-      Object.keys(this.events).forEach(i => this.events[i] = null);
-      Object.keys(this.rankMatches).forEach(i => this.rankMatches[i] = null);
 
       sekai.profile(`/api/user/${this.id}/profile`).then(response => {
-        if (id != this.id) return;
+        if (id !== this.id) return;
         this.profile = response;
-      }).then(() => {
-        Object.values(this.$db.events).filter(event => event.id >= this.$sekai.eventStartID).forEach(event => {
-          sekai.profile(`/api/user/event/${event.id}/ranking?targetUserId=${this.id}`).then(response => {
-            if (id != this.id) return;
-            this.events[event.id] = response.rankings && response.rankings[0] || {};
-          });
-        });
-        Object.values(this.$db.rankMatchSeasons).forEach(rankMatch => {
-          sekai.profile(`/api/user/rank-match-season/${rankMatch.id}/ranking?targetUserId=${this.id}`).then(response => {
-            if (id != this.id) return;
-            this.rankMatches[rankMatch.id] = response.rankings && response.rankings[0] || {};
-          });
-        });
       });
     }
   },
