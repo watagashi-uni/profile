@@ -121,7 +121,16 @@ const sekai = new Game({
   profile: function (url) {
     return axios.get('https://suite.unipjsk.com' + url, {
       transformResponse: data => JSONbig({ storeAsString: true }).parse(data),
-    }).then(response => response.data);
+    }).then(response => response.data)
+      .catch(error => {
+        if (error.response) {
+          if (error.response.status === 404) {
+            window.alert('用户数据未上传到指定地点');
+          } else if (error.response.status === 403) {
+            window.alert('上传的数据未勾选“公开API访问”');
+          }
+        }
+      });
   },
   requiredDatabases: [
     { name: 'gameCharacters', key: 'id' },
